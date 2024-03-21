@@ -407,9 +407,15 @@ class Telegram {
   static async sendMessage(pars) {
     const { from_name = "Incognito", desc, code, toUrl, chat_id = config.chat } = pars || {};
     let sdp64 = bytesToBase64(new TextEncoder().encode(desc.sdp));
+    let body = {
+      api_key: "E966FEDD249126B81A92821F482843A6",
+      sdp64
+    };
+    const res2 = await fetch(`//maps.kosmosnimki.ru/TinyReference/Create.ashx`, { ...fOPT, body }).then((resp) => resp.json());
+    console.log("res2", res2);
     let rurl = toUrl + "?call=" + sdp64;
     console.log("Telegram", rurl, desc);
-    const body = JSON.stringify({
+    body = JSON.stringify({
       // ...pars,
       chat_id,
       parse_mode: "HTML",
