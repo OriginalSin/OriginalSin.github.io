@@ -482,7 +482,8 @@ class VideoPipe {
       const message_id = await Telegram.sendMessage({
         code,
         desc: desc1,
-        toUrl: "https://127.0.0.1:8081/"
+        toUrl: "https://originalsin.github.io/rtc/index.html"
+        // toUrl: 'https://127.0.0.1:8081/'
       });
       if (!message_id)
         return;
