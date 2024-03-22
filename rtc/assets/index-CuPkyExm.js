@@ -534,15 +534,15 @@ class VideoPipe {
 }
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[46] = list[i];
-  child_ctx[48] = i;
+  child_ctx[43] = list[i];
+  child_ctx[45] = i;
   return child_ctx;
 }
 function create_each_block(ctx) {
   let li;
   let t0_value = (
     /*it*/
-    (ctx[46].username || "") + ""
+    (ctx[43].username || "") + ""
   );
   let t0;
   let button0;
@@ -551,7 +551,7 @@ function create_each_block(ctx) {
   let span;
   let t4_value = (
     /*it*/
-    (ctx[46].uuid || "") + ""
+    (ctx[43].uuid || "") + ""
   );
   let t4;
   let t5;
@@ -575,7 +575,7 @@ function create_each_block(ctx) {
         li,
         "data",
         /*i*/
-        ctx[48]
+        ctx[45]
       );
     },
     m(target, anchor) {
@@ -608,11 +608,11 @@ function create_each_block(ctx) {
     p(ctx2, dirty) {
       if (dirty[0] & /*Users*/
       8192 && t0_value !== (t0_value = /*it*/
-      (ctx2[46].username || "") + ""))
+      (ctx2[43].username || "") + ""))
         set_data(t0, t0_value);
       if (dirty[0] & /*Users*/
       8192 && t4_value !== (t4_value = /*it*/
-      (ctx2[46].uuid || "") + ""))
+      (ctx2[43].uuid || "") + ""))
         set_data(t4, t4_value);
     },
     d(detaching) {
@@ -928,19 +928,12 @@ function create_fragment(ctx) {
     }
   };
 }
-function base64ToBytes(base64) {
-  const binString = atob(base64);
-  return Uint8Array.from(binString, (m) => m.codePointAt(0));
-}
 function instance($$self, $$props, $$invalidate) {
   let pipe, tmInt2, botUrl, UserName = "";
   let video1, video2, startJoin, startButton, callButton, insertRelayButton, hangupButton, usersDiv, statusDiv, audioCheckbox;
   let uuid = self.crypto.randomUUID();
   let User2 = { uuid };
   let Users = [];
-  const fUrl = new URL(location.href);
-  const b64 = fUrl.searchParams.get("call");
-  const sdp = b64 ? new TextDecoder().decode(base64ToBytes(b64)) : "";
   const bcc = new BroadcastChannel("channel_identifier");
   bcc.addEventListener("message", ({ data, origin }) => {
     const { type, desc1 } = data;
@@ -1027,6 +1020,8 @@ function instance($$self, $$props, $$invalidate) {
       uuid,
       userAgentData: navigator.userAgentData.toJSON()
     });
+    if (sdp)
+      ;
   });
   async function join() {
     const puser = User2;
@@ -1057,7 +1052,7 @@ function instance($$self, $$props, $$invalidate) {
     const stream = await navigator.mediaDevices.getUserMedia(options);
     $$invalidate(2, video1.srcObject = stream, video1);
     localStream = stream;
-    $$invalidate(12, User2.pipe = new VideoPipe(localStream, gotremoteStream, { sdp, uuid, bcc }), User2);
+    $$invalidate(12, User2.pipe = new VideoPipe(localStream, gotremoteStream, { uuid, bcc }), User2);
     $$invalidate(6, callButton.disabled = false, callButton);
   }
   function call() {
