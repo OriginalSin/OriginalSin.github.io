@@ -1020,8 +1020,6 @@ function instance($$self, $$props, $$invalidate) {
       uuid,
       userAgentData: navigator.userAgentData.toJSON()
     });
-    if (sdp)
-      ;
   });
   async function join() {
     const puser = User2;
@@ -1068,9 +1066,6 @@ function instance($$self, $$props, $$invalidate) {
         if (ready) {
           debugger;
           clearInterval(tmInt2);
-          if (sdp) {
-            debugger;
-          }
         }
         console.log("setInterval", ready, tmInt2);
       },
