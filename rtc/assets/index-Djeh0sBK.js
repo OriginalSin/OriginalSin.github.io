@@ -455,19 +455,21 @@ function errorHandler(context) {
     console.log("ждем1", context);
   };
 }
-function noAction() {
+function noAction(dd) {
+  console.log("noAction 2", dd);
 }
+const pc_config = { "iceServers": [{ "url": "stun:stun.l.google.com:19302" }] };
+const pc_constraints = { "optional": [{ "DtlsSrtpKeyAgreement": true }] };
 class VideoPipe {
   constructor(stream, handler, opt) {
     this.opt = opt;
     this.rDesc = opt.rDesc;
-    let servers = null;
-    let pc1 = new RTCPeerConnection(servers);
-    let pc2 = new RTCPeerConnection(servers);
+    let pc1 = new RTCPeerConnection(pc_config, pc_constraints);
+    let pc2 = new RTCPeerConnection(pc_config, pc_constraints);
     pc1.addStream(stream);
     pc1.onicecandidate = function(event) {
-      console.log("onicecandidate", event);
       if (event.candidate) {
+        console.log("ip 1", event.candidate.address);
         pc2.addIceCandidate(
           new RTCIceCandidate(event.candidate),
           noAction,
@@ -477,6 +479,7 @@ class VideoPipe {
     };
     pc2.onicecandidate = function(event) {
       if (event.candidate) {
+        console.log("ip 2", event.candidate.address);
         pc1.addIceCandidate(
           new RTCIceCandidate(event.candidate),
           noAction,
@@ -505,9 +508,13 @@ class VideoPipe {
       if (!message_id)
         return;
       pc1.setLocalDescription(desc1);
-      if (_this.rDesc)
-        _this.remote(_this.rDesc);
-      return message_id;
+      pc2.setRemoteDescription(desc1);
+      pc2.createAnswer(function(desc2) {
+        console.log("desc2 +++", desc2);
+        _this.desc2 = desc2;
+        pc2.setLocalDescription(desc2);
+        pc1.setRemoteDescription(desc2);
+      }, errorHandler("pc2.createAnswer"));
     }, errorHandler("pc1.createOffer"));
     this.pc1 = pc1;
     this.pc2 = pc2;
@@ -534,15 +541,15 @@ class VideoPipe {
 }
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[43] = list[i];
-  child_ctx[45] = i;
+  child_ctx[44] = list[i];
+  child_ctx[46] = i;
   return child_ctx;
 }
 function create_each_block(ctx) {
   let li;
   let t0_value = (
     /*it*/
-    (ctx[43].username || "") + ""
+    (ctx[44].username || "") + ""
   );
   let t0;
   let button0;
@@ -551,7 +558,7 @@ function create_each_block(ctx) {
   let span;
   let t4_value = (
     /*it*/
-    (ctx[43].uuid || "") + ""
+    (ctx[44].uuid || "") + ""
   );
   let t4;
   let t5;
@@ -575,7 +582,7 @@ function create_each_block(ctx) {
         li,
         "data",
         /*i*/
-        ctx[45]
+        ctx[46]
       );
     },
     m(target, anchor) {
@@ -608,11 +615,11 @@ function create_each_block(ctx) {
     p(ctx2, dirty) {
       if (dirty[0] & /*Users*/
       8192 && t0_value !== (t0_value = /*it*/
-      (ctx2[43].username || "") + ""))
+      (ctx2[44].username || "") + ""))
         set_data(t0, t0_value);
       if (dirty[0] & /*Users*/
       8192 && t4_value !== (t4_value = /*it*/
-      (ctx2[43].uuid || "") + ""))
+      (ctx2[44].uuid || "") + ""))
         set_data(t4, t4_value);
     },
     d(detaching) {
@@ -947,9 +954,8 @@ function instance($$self, $$props, $$invalidate) {
           it.tm = data.tm;
         } else if (type === "video") {
           it.video = desc1;
-        } else if (type === "video2") {
-          console.log("video2", data);
-        }
+        } else
+          ;
       }
     });
     if (isNew) {
@@ -1020,6 +1026,7 @@ function instance($$self, $$props, $$invalidate) {
       uuid,
       userAgentData: navigator.userAgentData.toJSON()
     });
+    init2();
   });
   async function join() {
     const puser = User2;
@@ -1043,13 +1050,15 @@ function instance($$self, $$props, $$invalidate) {
     $$invalidate(10, statusDiv.textContent = `${pipes.length} element(s) in chain`, statusDiv);
     $$invalidate(7, insertRelayButton.disabled = false, insertRelayButton);
   }
-  async function start() {
+  async function init2() {
     console.log("Requesting local stream");
-    $$invalidate(5, startButton.disabled = true, startButton);
     const options = audioCheckbox.checked ? { audio: true, video: true } : { audio: false, video: true };
     const stream = await navigator.mediaDevices.getUserMedia(options);
     $$invalidate(2, video1.srcObject = stream, video1);
     localStream = stream;
+  }
+  function start() {
+    $$invalidate(5, startButton.disabled = true, startButton);
     $$invalidate(12, User2.pipe = new VideoPipe(localStream, gotremoteStream, { uuid, bcc }), User2);
     $$invalidate(6, callButton.disabled = false, callButton);
   }
