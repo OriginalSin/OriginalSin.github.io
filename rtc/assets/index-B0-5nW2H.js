@@ -524,7 +524,7 @@ class VideoPipe {
       _this.desc2 = desc22;
       _this.pc2.setLocalDescription(desc22);
       _this.pc1.setRemoteDescription(desc22);
-      _this.opt.bcc.postMessage({ type: "video2" });
+      _this.opt.bcc.postMessage({ type: "video", uuid: _this.opt.uuid, desc1: _this.desc1 });
     }, errorHandler("pc2.createAnswer"));
   }
   close() {
