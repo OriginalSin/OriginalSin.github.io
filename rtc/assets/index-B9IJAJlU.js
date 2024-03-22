@@ -76,6 +76,12 @@ function detach(node) {
     node.parentNode.removeChild(node);
   }
 }
+function destroy_each(iterations, detaching) {
+  for (let i = 0; i < iterations.length; i += 1) {
+    if (iterations[i])
+      iterations[i].d(detaching);
+  }
+}
 function element(name) {
   return document.createElement(name);
 }
@@ -84,6 +90,10 @@ function text(data) {
 }
 function space() {
   return text(" ");
+}
+function listen(node, event, handler, options) {
+  node.addEventListener(event, handler, options);
+  return () => node.removeEventListener(event, handler, options);
 }
 function attr(node, attribute, value) {
   if (value == null)
@@ -192,6 +202,9 @@ function transition_in(block, local) {
     outroing.delete(block);
     block.i(local);
   }
+}
+function ensure_array_like(array_like_or_iterator) {
+  return (array_like_or_iterator == null ? void 0 : array_like_or_iterator.length) !== void 0 ? array_like_or_iterator : Array.from(array_like_or_iterator);
 }
 function mount_component(component, target, anchor) {
   const { fragment, after_update } = component.$$;
@@ -407,15 +420,9 @@ class Telegram {
   static async sendMessage(pars) {
     const { from_name = "Incognito", desc, code, toUrl, chat_id = config.chat } = pars || {};
     let sdp64 = bytesToBase64(new TextEncoder().encode(desc.sdp));
-    let body = {
-      api_key: "E966FEDD249126B81A92821F482843A6",
-      sdp64
-    };
-    const res2 = await fetch(`//maps.kosmosnimki.ru/TinyReference/Create.ashx`, { ...fOPT, body }).then((resp) => resp.json());
-    console.log("res2", res2);
     let rurl = toUrl + "?call=" + sdp64;
     console.log("Telegram", rurl, desc);
-    body = JSON.stringify({
+    let body = JSON.stringify({
       // ...pars,
       chat_id,
       parse_mode: "HTML",
@@ -451,8 +458,9 @@ function errorHandler(context) {
 function noAction() {
 }
 class VideoPipe {
-  constructor(stream, handler, rDesc) {
-    this.rDesc = rDesc;
+  constructor(stream, handler, opt) {
+    this.opt = opt;
+    this.rDesc = opt.rDesc;
     let servers = null;
     let pc1 = new RTCPeerConnection(servers);
     let pc2 = new RTCPeerConnection(servers);
@@ -477,10 +485,13 @@ class VideoPipe {
       }
     };
     pc2.onaddstream = function(e) {
+      console.log("onaddstream", e.stream);
       handler(e.stream);
     };
     const _this = this;
+    const uuid = this.opt.uuid;
     pc1.createOffer(async function(desc1) {
+      _this.opt.bcc.postMessage({ type: "video", uuid, desc1 });
       _this.desc1 = desc1;
       console.log("desc1", desc1, Telegram);
       let code = 234;
@@ -505,15 +516,15 @@ class VideoPipe {
     console.warn("getRemote", this.waitCode);
     return await Telegram.getUpdates(this.waitCode);
   }
-  remote(desc2) {
+  remote(desc2, callBack) {
     const _this = this;
-    debugger;
     this.pc2.setRemoteDescription(this.desc1);
     this.pc2.createAnswer(function(desc22) {
       console.log("desc2 +++", desc22);
       _this.desc2 = desc22;
       _this.pc2.setLocalDescription(desc22);
       _this.pc1.setRemoteDescription(desc22);
+      _this.opt.bcc.postMessage({ type: "video2" });
     }, errorHandler("pc2.createAnswer"));
   }
   close() {
@@ -521,9 +532,101 @@ class VideoPipe {
     this.pc2.close();
   }
 }
+function get_each_context(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[46] = list[i];
+  child_ctx[48] = i;
+  return child_ctx;
+}
+function create_each_block(ctx) {
+  let li;
+  let t0_value = (
+    /*it*/
+    (ctx[46].username || "") + ""
+  );
+  let t0;
+  let button0;
+  let button1;
+  let t3;
+  let span;
+  let t4_value = (
+    /*it*/
+    (ctx[46].uuid || "") + ""
+  );
+  let t4;
+  let t5;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      li = element("li");
+      t0 = text(t0_value);
+      button0 = element("button");
+      button0.textContent = "Start";
+      button1 = element("button");
+      button1.textContent = "End";
+      t3 = text(" (");
+      span = element("span");
+      t4 = text(t4_value);
+      t5 = text(")");
+      attr(button0, "class", "svelte-uo50ow");
+      attr(button1, "class", "svelte-uo50ow");
+      attr(
+        li,
+        "data",
+        /*i*/
+        ctx[48]
+      );
+    },
+    m(target, anchor) {
+      insert(target, li, anchor);
+      append(li, t0);
+      append(li, button0);
+      append(li, button1);
+      append(li, t3);
+      append(li, span);
+      append(span, t4);
+      append(li, t5);
+      if (!mounted) {
+        dispose = [
+          listen(
+            button0,
+            "click",
+            /*startCall*/
+            ctx[16]
+          ),
+          listen(
+            button1,
+            "click",
+            /*endCall*/
+            ctx[15]
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty[0] & /*Users*/
+      8192 && t0_value !== (t0_value = /*it*/
+      (ctx2[46].username || "") + ""))
+        set_data(t0, t0_value);
+      if (dirty[0] & /*Users*/
+      8192 && t4_value !== (t4_value = /*it*/
+      (ctx2[46].uuid || "") + ""))
+        set_data(t4, t4_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(li);
+      }
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
 function create_fragment(ctx) {
   let main;
-  let div7;
+  let div8;
   let h1;
   let t3;
   let div4;
@@ -532,9 +635,9 @@ function create_fragment(ctx) {
   let div0;
   let t4_value = (
     /*User*/
-    (ctx[1] ? (
+    (ctx[12] ? (
       /*User*/
-      ctx[1].username
+      ctx[12].username
     ) : "") + ""
   );
   let t4;
@@ -565,10 +668,32 @@ function create_fragment(ctx) {
   let button3;
   let t21;
   let div6;
+  let t22;
+  let details;
+  let summary;
+  let t24;
+  let ul;
+  let li;
+  let t25;
+  let t26;
+  let t27;
+  let span3;
+  let t29;
+  let t30;
+  let t31;
+  let div7;
+  let each_value = ensure_array_like(
+    /*Users*/
+    ctx[13]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+  }
   return {
     c() {
       main = element("main");
-      div7 = element("div");
+      div8 = element("div");
       h1 = element("h1");
       h1.innerHTML = `<a href="//webrtc.github.io/samples/" title="WebRTC samples homepage">WebRTC samples</a> <span>Peer connection relay</span>`;
       t3 = space();
@@ -586,7 +711,7 @@ function create_fragment(ctx) {
       div2 = element("div");
       t7 = space();
       video1_1 = element("video");
-      video1_1.innerHTML = `<track default="" kind="captions" srclang="en" src="/media/examples/friday.vtt"/>`;
+      video1_1.innerHTML = `<track default="" kind="captions" srclang="en"/>`;
       t8 = space();
       section = element("section");
       input = element("input");
@@ -611,20 +736,44 @@ function create_fragment(ctx) {
       button3.textContent = "Hang Up";
       t21 = space();
       div6 = element("div");
-      attr(div0, "class", "you svelte-1sqiq7");
+      t22 = space();
+      details = element("details");
+      summary = element("summary");
+      summary.textContent = "Users on site";
+      t24 = space();
+      ul = element("ul");
+      li = element("li");
+      t25 = text("You : ");
+      t26 = text(
+        /*UserName*/
+        ctx[1]
+      );
+      t27 = text(" (");
+      span3 = element("span");
+      span3.textContent = `${/*uuid*/
+      ctx[14] || ""}`;
+      t29 = text(")");
+      t30 = space();
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      t31 = space();
+      div7 = element("div");
+      attr(div0, "class", "you svelte-uo50ow");
       video0.playsInline = true;
       video0.autoplay = true;
       video0.controls = true;
-      attr(video0, "class", "svelte-1sqiq7");
-      attr(div1, "class", "youCont svelte-1sqiq7");
-      attr(span1, "class", "svelte-1sqiq7");
-      attr(div2, "class", "video2Name svelte-1sqiq7");
+      attr(video0, "class", "svelte-uo50ow");
+      attr(div1, "class", "youCont svelte-uo50ow");
+      attr(span1, "class", "svelte-uo50ow");
+      attr(div2, "class", "video2Name svelte-uo50ow");
       video1_1.playsInline = true;
       video1_1.autoplay = true;
-      attr(video1_1, "class", "svelte-1sqiq7");
-      attr(div3, "class", "video2Cont svelte-1sqiq7");
-      attr(span2, "class", "svelte-1sqiq7");
-      attr(div4, "class", "videos svelte-1sqiq7");
+      video1_1.controls = true;
+      attr(video1_1, "class", "svelte-uo50ow");
+      attr(div3, "class", "video2Cont svelte-uo50ow");
+      attr(span2, "class", "svelte-uo50ow");
+      attr(div4, "class", "videos svelte-uo50ow");
       attr(input, "type", "checkbox");
       attr(label, "for", "audio");
       attr(a1, "target", "_blank");
@@ -634,65 +783,90 @@ function create_fragment(ctx) {
         /*botUrl*/
         ctx[0]
       );
+      attr(button0, "class", "svelte-uo50ow");
       button1.disabled = "";
+      attr(button1, "class", "svelte-uo50ow");
       button2.disabled = "";
+      attr(button2, "class", "svelte-uo50ow");
       button3.disabled = "";
+      attr(button3, "class", "svelte-uo50ow");
       attr(div5, "id", "buttons");
-      attr(div7, "id", "container");
+      details.open = true;
+      attr(div8, "id", "container");
     },
     m(target, anchor) {
       insert(target, main, anchor);
-      append(main, div7);
-      append(div7, h1);
-      append(div7, t3);
-      append(div7, div4);
+      append(main, div8);
+      append(div8, h1);
+      append(div8, t3);
+      append(div8, div4);
       append(div4, span1);
       append(span1, div1);
       append(div1, div0);
       append(div0, t4);
       append(div1, t5);
       append(div1, video0);
-      ctx[11](video0);
+      ctx[17](video0);
       append(div4, t6);
       append(div4, span2);
       append(span2, div3);
       append(div3, div2);
       append(div3, t7);
       append(div3, video1_1);
-      ctx[12](video1_1);
-      append(div7, t8);
-      append(div7, section);
+      ctx[18](video1_1);
+      append(div8, t8);
+      append(div8, section);
       append(section, input);
-      ctx[13](input);
+      ctx[19](input);
       append(section, t9);
       append(section, label);
-      append(div7, t11);
-      append(div7, div5);
+      append(div8, t11);
+      append(div8, div5);
       append(div5, a1);
       append(a1, t12);
-      ctx[14](a1);
+      ctx[20](a1);
       append(div5, t13);
       append(div5, button0);
-      ctx[15](button0);
+      ctx[21](button0);
       append(div5, t15);
       append(div5, button1);
-      ctx[16](button1);
+      ctx[22](button1);
       append(div5, t17);
       append(div5, button2);
-      ctx[17](button2);
+      ctx[23](button2);
       append(div5, t19);
       append(div5, button3);
-      ctx[18](button3);
-      append(div7, t21);
-      append(div7, div6);
-      ctx[19](div6);
+      ctx[24](button3);
+      append(div8, t21);
+      append(div8, div6);
+      ctx[25](div6);
+      append(div8, t22);
+      append(div8, details);
+      append(details, summary);
+      append(details, t24);
+      append(details, ul);
+      append(ul, li);
+      append(li, t25);
+      append(li, t26);
+      append(li, t27);
+      append(li, span3);
+      append(li, t29);
+      append(ul, t30);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(ul, null);
+        }
+      }
+      append(details, t31);
+      append(details, div7);
+      ctx[26](details);
     },
     p(ctx2, dirty) {
       if (dirty[0] & /*User*/
-      2 && t4_value !== (t4_value = /*User*/
-      (ctx2[1] ? (
+      4096 && t4_value !== (t4_value = /*User*/
+      (ctx2[12] ? (
         /*User*/
-        ctx2[1].username
+        ctx2[12].username
       ) : "") + ""))
         set_data(t4, t4_value);
       if (dirty[0] & /*botUrl*/
@@ -704,6 +878,35 @@ function create_fragment(ctx) {
           ctx2[0]
         );
       }
+      if (dirty[0] & /*UserName*/
+      2)
+        set_data(
+          t26,
+          /*UserName*/
+          ctx2[1]
+        );
+      if (dirty[0] & /*Users, endCall, startCall*/
+      106496) {
+        each_value = ensure_array_like(
+          /*Users*/
+          ctx2[13]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(ul, null);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+      }
     },
     i: noop,
     o: noop,
@@ -711,15 +914,17 @@ function create_fragment(ctx) {
       if (detaching) {
         detach(main);
       }
-      ctx[11](null);
-      ctx[12](null);
-      ctx[13](null);
-      ctx[14](null);
-      ctx[15](null);
-      ctx[16](null);
       ctx[17](null);
       ctx[18](null);
       ctx[19](null);
+      ctx[20](null);
+      ctx[21](null);
+      ctx[22](null);
+      ctx[23](null);
+      ctx[24](null);
+      ctx[25](null);
+      destroy_each(each_blocks, detaching);
+      ctx[26](null);
     }
   };
 }
@@ -728,28 +933,110 @@ function base64ToBytes(base64) {
   return Uint8Array.from(binString, (m) => m.codePointAt(0));
 }
 function instance($$self, $$props, $$invalidate) {
-  let pipe, tmInt2, botUrl, User2;
-  let video1, video2, startJoin, startButton, callButton, insertRelayButton, hangupButton, statusDiv, audioCheckbox;
+  let pipe, tmInt2, botUrl, UserName = "";
+  let video1, video2, startJoin, startButton, callButton, insertRelayButton, hangupButton, usersDiv, statusDiv, audioCheckbox;
+  let uuid = self.crypto.randomUUID();
+  let User2 = { uuid };
+  let Users = [];
   const fUrl = new URL(location.href);
   const b64 = fUrl.searchParams.get("call");
   const sdp = b64 ? new TextDecoder().decode(base64ToBytes(b64)) : "";
+  const bcc = new BroadcastChannel("channel_identifier");
+  bcc.addEventListener("message", ({ data, origin }) => {
+    const { type, desc1 } = data;
+    let isNew = true;
+    Users.filter((it, i) => {
+      if (it.uuid === data.uuid) {
+        isNew = false;
+        if (type === "teleUser") {
+          $$invalidate(13, Users[i] = { ...it, ...data.User }, Users);
+        } else if (type === "userLastTime") {
+          it.tm = data.tm;
+        } else if (type === "video") {
+          it.video = desc1;
+        } else if (type === "video2") {
+          console.log("video2", data);
+        }
+      }
+    });
+    if (isNew) {
+      isNew = { uuid: data.uuid };
+      if (type === "guest") {
+        isNew = {
+          ...isNew,
+          userAgentData: data.userAgentData
+        };
+      } else if (type === "teleUser") {
+        isNew = { ...isNew, ...data.User };
+      } else if (type === "video") {
+        isNew = { ...isNew, video: desc1 };
+      }
+      Users.push(isNew);
+      const arr = [...Users];
+      $$invalidate(13, Users = arr);
+    }
+  });
+  window.setInterval(
+    async () => {
+      bcc.postMessage({
+        type: "userLastTime",
+        uuid,
+        tm: Date.now()
+      });
+    },
+    5e3
+  );
+  window.setInterval(
+    async () => {
+      const ZD = 6e4;
+      const tm = Date.now() - ZD;
+      const arr = Users.filter((it) => it.tm > tm);
+      $$invalidate(13, Users = arr);
+    },
+    2e4
+  );
+  const endCall = (ev) => {
+    const target = ev.target;
+    const nm = target.parentNode.getAttribute("data");
+    const to = Users[nm];
+    console.log("endCall", to);
+  };
+  const startCall = (ev) => {
+    const target = ev.target;
+    const nm = target.parentNode.getAttribute("data");
+    const to = Users[nm];
+    const pipe2 = User2.pipe;
+    if (to.video && pipe2) {
+      pipe2.remote(to.video.sdp);
+      target.disabled = true;
+    }
+    console.log("startCall", to, User2);
+  };
   onMount(() => {
     $$invalidate(5, startButton.onclick = start, startButton);
     $$invalidate(6, callButton.onclick = call, callButton);
     $$invalidate(7, insertRelayButton.onclick = insertRelay, insertRelayButton);
     $$invalidate(8, hangupButton.onclick = hangup, hangupButton);
-    $$invalidate(5, startButton.disabled = true, startButton);
     $$invalidate(6, callButton.disabled = true, callButton);
     $$invalidate(7, insertRelayButton.disabled = true, insertRelayButton);
     $$invalidate(8, hangupButton.disabled = true, hangupButton);
     $$invalidate(0, botUrl = Telegram.getStart());
     $$invalidate(4, startJoin.onclick = join, startJoin);
+    bcc.postMessage({
+      type: "guest",
+      uuid,
+      userAgentData: navigator.userAgentData.toJSON()
+    });
   });
   async function join() {
-    $$invalidate(1, User2 = await Telegram.sendStart());
+    const puser = User2;
+    const user = await Telegram.sendStart();
+    $$invalidate(12, User2 = { ...puser, ...user });
+    bcc.postMessage({ type: "teleUser", uuid, User: User2 });
     console.log("join", User2);
     if (User2) {
       $$invalidate(5, startButton.disabled = false, startButton);
+      $$invalidate(1, UserName = User2.username);
     }
   }
   const pipes = [];
@@ -758,10 +1045,9 @@ function instance($$self, $$props, $$invalidate) {
   function gotremoteStream(stream) {
     remoteStream = stream;
     $$invalidate(3, video2.srcObject = stream, video2);
-    debugger;
     console.log("Received remote stream");
     console.log(`${pipes.length} element(s) in chain`);
-    $$invalidate(9, statusDiv.textContent = `${pipes.length} element(s) in chain`, statusDiv);
+    $$invalidate(10, statusDiv.textContent = `${pipes.length} element(s) in chain`, statusDiv);
     $$invalidate(7, insertRelayButton.disabled = false, insertRelayButton);
   }
   async function start() {
@@ -771,7 +1057,7 @@ function instance($$self, $$props, $$invalidate) {
     const stream = await navigator.mediaDevices.getUserMedia(options);
     $$invalidate(2, video1.srcObject = stream, video1);
     localStream = stream;
-    new VideoPipe(localStream, gotremoteStream, sdp);
+    $$invalidate(12, User2.pipe = new VideoPipe(localStream, gotremoteStream, { sdp, uuid, bcc }), User2);
     $$invalidate(6, callButton.disabled = false, callButton);
   }
   function call() {
@@ -807,11 +1093,14 @@ function instance($$self, $$props, $$invalidate) {
       const pipe2 = pipes.pop();
       pipe2.close();
     }
-    $$invalidate(9, statusDiv.textContent = `${pipes.length} element(s) in chain`, statusDiv);
+    $$invalidate(10, statusDiv.textContent = `${pipes.length} element(s) in chain`, statusDiv);
     $$invalidate(7, insertRelayButton.disabled = true, insertRelayButton);
     $$invalidate(8, hangupButton.disabled = true, hangupButton);
     $$invalidate(6, callButton.disabled = false, callButton);
   }
+  document.addEventListener("visibilitychange", () => {
+    console.log(document.visibilityState);
+  });
   function video0_binding($$value) {
     binding_callbacks[$$value ? "unshift" : "push"](() => {
       video1 = $$value;
@@ -827,7 +1116,7 @@ function instance($$self, $$props, $$invalidate) {
   function input_binding($$value) {
     binding_callbacks[$$value ? "unshift" : "push"](() => {
       audioCheckbox = $$value;
-      $$invalidate(10, audioCheckbox);
+      $$invalidate(11, audioCheckbox);
     });
   }
   function a1_binding($$value) {
@@ -863,12 +1152,18 @@ function instance($$self, $$props, $$invalidate) {
   function div6_binding($$value) {
     binding_callbacks[$$value ? "unshift" : "push"](() => {
       statusDiv = $$value;
-      $$invalidate(9, statusDiv);
+      $$invalidate(10, statusDiv);
+    });
+  }
+  function details_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      usersDiv = $$value;
+      $$invalidate(9, usersDiv);
     });
   }
   return [
     botUrl,
-    User2,
+    UserName,
     video1,
     video2,
     startJoin,
@@ -876,8 +1171,14 @@ function instance($$self, $$props, $$invalidate) {
     callButton,
     insertRelayButton,
     hangupButton,
+    usersDiv,
     statusDiv,
     audioCheckbox,
+    User2,
+    Users,
+    uuid,
+    endCall,
+    startCall,
     video0_binding,
     video1_1_binding,
     input_binding,
@@ -886,7 +1187,8 @@ function instance($$self, $$props, $$invalidate) {
     button1_binding,
     button2_binding,
     button3_binding,
-    div6_binding
+    div6_binding,
+    details_binding
   ];
 }
 class App extends SvelteComponent {
