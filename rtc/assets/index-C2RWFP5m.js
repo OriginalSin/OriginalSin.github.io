@@ -419,8 +419,8 @@ class Telegram {
   }
   static async sendMessage(pars) {
     const { from_name = "Incognito", desc, code, toUrl, chat_id = config.chat } = pars || {};
-    let sdp64 = bytesToBase64(new TextEncoder().encode(desc.sdp));
-    let rurl = toUrl + "?call=" + sdp64;
+    bytesToBase64(new TextEncoder().encode(desc.sdp));
+    let rurl = toUrl + "?call=1";
     console.log("Telegram", rurl, desc);
     let body = JSON.stringify({
       // ...pars,
