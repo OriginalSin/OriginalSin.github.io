@@ -379,11 +379,9 @@ function create_fragment(ctx) {
       attr(input, "inputmode", "latin");
       attr(input, "size", "60");
       attr(input, "maxlength", "120");
-      input.disabled = true;
       attr(label, "for", "message");
       attr(button2, "name", "sendButton");
       attr(button2, "class", "buttonright");
-      button2.disabled = true;
       attr(div1, "class", "messagebox");
       attr(div2, "class", "messagebox");
       attr(div3, "id", "container");
@@ -427,7 +425,43 @@ function create_fragment(ctx) {
 }
 function instance($$self, $$props, $$invalidate) {
   const PC_CONFIG = {
-    "iceServers": [{ "url": "stun:stun.l.google.com:19302" }]
+    "iceServers": [
+      // {"url": "stun:stun.l.google.com:19302"}
+      { url: "stun:stun01.sipphone.com" },
+      { url: "stun:stun.ekiga.net" },
+      { url: "stun:stun.fwdnet.net" },
+      { url: "stun:stun.ideasip.com" },
+      { url: "stun:stun.iptel.org" },
+      { url: "stun:stun.rixtelecom.se" },
+      { url: "stun:stun.schlund.de" },
+      { url: "stun:stun.l.google.com:19302" },
+      { url: "stun:stun1.l.google.com:19302" },
+      { url: "stun:stun2.l.google.com:19302" },
+      { url: "stun:stun3.l.google.com:19302" },
+      { url: "stun:stun4.l.google.com:19302" },
+      { url: "stun:stunserver.org" },
+      { url: "stun:stun.softjoys.com" },
+      { url: "stun:stun.voiparound.com" },
+      { url: "stun:stun.voipbuster.com" },
+      { url: "stun:stun.voipstunt.com" },
+      { url: "stun:stun.voxgratia.org" },
+      { url: "stun:stun.xten.com" },
+      {
+        url: "turn:numb.viagenie.ca",
+        credential: "muazkh",
+        username: "webrtc@live.com"
+      },
+      {
+        url: "turn:192.158.29.39:3478?transport=udp",
+        credential: "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
+        username: "28224511:1379330808"
+      },
+      {
+        url: "turn:192.158.29.39:3478?transport=tcp",
+        credential: "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
+        username: "28224511:1379330808"
+      }
+    ]
   };
   const PC_CONSTRAINTS = {
     "optional": [{ "DtlsSrtpKeyAgreement": true }]
@@ -437,6 +471,7 @@ function instance($$self, $$props, $$invalidate) {
   let sCh, rCh;
   let lCn, rCn;
   let lcAtempt = 1, rcAtempt = 1;
+  const bcc = new BroadcastChannel("channel_identifier");
   onMount(() => {
     connectButton.addEventListener(
       "click",
@@ -450,8 +485,13 @@ function instance($$self, $$props, $$invalidate) {
     );
     disconnectButton.addEventListener("click", disconnectPeers, false);
     sendButton.addEventListener("click", sendMessage, false);
+    bcc.addEventListener("message", ({ data, origin }) => {
+      const { text: text2 } = data;
+      addMessage("bcc: " + origin + " : " + text2);
+    });
   });
   const connectPeers = async () => {
+    addMessage("Atempt: " + lcAtempt + " : " + rcAtempt);
     lCn = new RTCPeerConnection(PC_CONFIG, PC_CONSTRAINTS);
     sCh = lCn.createDataChannel("sendChannel");
     sCh.onopen = handleSendChannelStatusChange;
@@ -462,6 +502,8 @@ function instance($$self, $$props, $$invalidate) {
       const ec = e.candidate;
       if (!ec)
         return true;
+      const { address, port, protocol, foundation, priority, component } = ec;
+      bcc.postMessage({ text: address });
       await rCn.addIceCandidate(ec).catch((err) => {
         if (!rCn.localDescription)
           return;
@@ -528,8 +570,11 @@ function instance($$self, $$props, $$invalidate) {
     }
   };
   const handleReceiveMessage = (event) => {
+    addMessage(event.data);
+  };
+  const addMessage = (txt) => {
     var el = document.createElement("p");
-    var txtNode = document.createTextNode(event.data);
+    var txtNode = document.createTextNode(txt);
     el.appendChild(txtNode);
     receiveBox.appendChild(el);
   };
@@ -554,7 +599,9 @@ function instance($$self, $$props, $$invalidate) {
   };
   const sendMessage = () => {
     var message = messageInputBox.value;
-    sCh.send(message);
+    if (sCh)
+      sCh.send(message);
+    bcc.postMessage({ text: message });
     $$invalidate(3, messageInputBox.value = "", messageInputBox);
     messageInputBox.focus();
   };
