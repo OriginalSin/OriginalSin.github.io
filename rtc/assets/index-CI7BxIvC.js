@@ -425,8 +425,10 @@ function create_fragment(ctx) {
     }
   };
 }
-const PC_CONFIG = null;
 function instance($$self, $$props, $$invalidate) {
+  const PC_CONFIG = {
+    "iceServers": [{ "url": "stun:stun.l.google.com:19302" }]
+  };
   const PC_CONSTRAINTS = {
     "optional": [{ "DtlsSrtpKeyAgreement": true }]
   };
@@ -465,12 +467,9 @@ function instance($$self, $$props, $$invalidate) {
           return;
         if (lcAtempt < 10) {
           disconnectPeers();
+          connectPeers();
         } else {
-          handleAddCandidateError(
-            err,
-            "l",
-            ec
-          );
+          handleAddCandidateError(err, "l", ec);
         }
       });
     };
@@ -483,12 +482,9 @@ function instance($$self, $$props, $$invalidate) {
         console.log("remote:", address, port, protocol, foundation, priority, component);
         if (rcAtempt < 10) {
           disconnectPeers();
+          connectPeers();
         } else {
-          handleAddCandidateError(
-            err,
-            "r",
-            ec
-          );
+          handleAddCandidateError(err, "r", ec);
         }
       });
     };
