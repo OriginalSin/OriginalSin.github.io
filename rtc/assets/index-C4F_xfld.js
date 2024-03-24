@@ -822,12 +822,14 @@ function create_fragment(ctx) {
       attr(div0, "class", "you svelte-uo50ow");
       video0.playsInline = true;
       video0.controls = true;
+      video0.autoplay = true;
       attr(video0, "class", "svelte-uo50ow");
       attr(div1, "class", "youCont svelte-uo50ow");
       attr(span1, "class", "svelte-uo50ow");
       attr(div2, "class", "video2Name svelte-uo50ow");
       video1_1.playsInline = true;
       video1_1.controls = true;
+      video1_1.autoplay = true;
       attr(video1_1, "class", "svelte-uo50ow");
       attr(div3, "class", "video2Cont svelte-uo50ow");
       attr(span2, "class", "svelte-uo50ow");
@@ -1013,7 +1015,7 @@ function instance($$self, $$props, $$invalidate) {
   bcc.addEventListener("message", ({ data, origin }) => {
     const { type, desc1 } = data;
     let isNew = true;
-    Users.filter((it, i) => {
+    Object.values(Users).filter((it, i) => {
       if (it.uuid === data.uuid) {
         isNew = false;
         if (type === "teleUser") {
@@ -1101,11 +1103,12 @@ function instance($$self, $$props, $$invalidate) {
   async function init2(ev) {
     const target = ev.target;
     target.parentNode.parentNode.setAttribute("open", true);
-    console.log("Requesting local stream", target.parentNode.parentNode);
     const options = audioCheckbox.checked ? { audio: true, video: true } : { audio: false, video: true };
     const stream = await navigator.mediaDevices.getUserMedia(options);
+    bcc.postMessage({ cmd: "stream", id: stream.id });
     $$invalidate(1, video1.srcObject = stream, video1);
     localStream = stream;
+    console.log("my stream:", stream);
   }
   function start() {
     $$invalidate(4, startButton.disabled = true, startButton);
