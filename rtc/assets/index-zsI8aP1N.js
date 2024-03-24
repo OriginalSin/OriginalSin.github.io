@@ -507,10 +507,16 @@ class VideoPipe {
     this.rDesc = opt.rDesc;
     let pc1 = new RTCPeerConnection(RTCConfig.config, RTCConfig.constraints);
     let pc2 = new RTCPeerConnection(RTCConfig.config, RTCConfig.constraints);
+    const _this = this;
+    const uuid = this.opt.uuid;
+    const bcc = this.opt.bcc;
     pc1.addStream(stream);
     pc1.onicecandidate = function(event) {
       if (event.candidate) {
         console.log("ip 1", event.candidate.address);
+        event.candidate;
+        const { address, port, protocol, foundation, priority, component } = event.candidate;
+        bcc.postMessage({ cmd: "offer", uuid, foundation, address });
         pc2.addIceCandidate(
           new RTCIceCandidate(event.candidate),
           noAction,
@@ -532,26 +538,14 @@ class VideoPipe {
       console.log("onaddstream", e.stream);
       handler(e.stream);
     };
-    const _this = this;
-    const uuid = this.opt.uuid;
     pc1.createOffer(async function(desc1) {
-      _this.opt.bcc.postMessage({ cmd: "video", uuid, desc1 });
+      bcc.postMessage({ cmd: "video", uuid, desc1 });
       _this.desc1 = desc1;
-      console.log("desc1", desc1, Telegram);
-      let code = 234;
-      _this.waitCode = code;
-      const message_id = await Telegram.sendMessage({
-        code,
-        desc: desc1,
-        toUrl: "https://originalsin.github.io/rtc/index.html"
-        // toUrl: 'https://127.0.0.1:8081/'
-      });
-      if (!message_id)
-        return;
       pc1.setLocalDescription(desc1);
       pc2.setRemoteDescription(desc1);
       pc2.createAnswer(function(desc2) {
         console.log("desc2 +++", desc2);
+        bcc.postMessage({ cmd: "video", uuid, desc1 });
         _this.desc2 = desc2;
         pc2.setLocalDescription(desc2);
         pc1.setRemoteDescription(desc2);
@@ -562,7 +556,6 @@ class VideoPipe {
   }
   async getRemote() {
     console.warn("getRemote", this.waitCode);
-    return await Telegram.getUpdates(this.waitCode);
   }
   remote(desc2, callBack) {
     const _this = this;
