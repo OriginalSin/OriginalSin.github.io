@@ -535,7 +535,7 @@ class VideoPipe {
     const _this = this;
     const uuid = this.opt.uuid;
     pc1.createOffer(async function(desc1) {
-      _this.opt.bcc.postMessage({ type: "video", uuid, desc1 });
+      _this.opt.bcc.postMessage({ cmd: "video", uuid, desc1 });
       _this.desc1 = desc1;
       console.log("desc1", desc1, Telegram);
       let code = 234;
@@ -572,7 +572,7 @@ class VideoPipe {
       _this.desc2 = desc22;
       _this.pc2.setLocalDescription(desc22);
       _this.pc1.setRemoteDescription(desc22);
-      _this.opt.bcc.postMessage({ type: "video", uuid: _this.opt.uuid, desc1: _this.desc1 });
+      _this.opt.bcc.postMessage({ cmd: "video", uuid: _this.opt.uuid, desc1: _this.desc1 });
     }, errorHandler("pc2.createAnswer"));
   }
   close() {
@@ -1012,38 +1012,17 @@ function instance($$self, $$props, $$invalidate) {
   }
   let User2 = { uuid };
   let Users = {};
+  const updateUsers = (data) => {
+    const { uuid: uuid2 } = data;
+    $$invalidate(13, Users[uuid2] = data, Users);
+  };
   bcc.addEventListener("message", ({ data, origin }) => {
-    const { type, desc1 } = data;
-    let isNew = true;
-    Object.values(Users).filter((it, i) => {
-      if (it.uuid === data.uuid) {
-        isNew = false;
-        if (type === "teleUser") {
-          $$invalidate(13, Users[i] = { ...it, ...data.User }, Users);
-        } else if (type === "userLastTime") {
-          it.tm = data.tm;
-        } else if (type === "video") {
-          it.video = desc1;
-        } else
-          ;
-      }
-    });
-    if (isNew) {
-      isNew = { uuid: data.uuid };
-      if (type === "guest") {
-        isNew = {
-          ...isNew,
-          userAgentData: data.userAgentData
-        };
-      } else if (type === "teleUser") {
-        isNew = { ...isNew, ...data.User };
-      } else if (type === "video") {
-        isNew = { ...isNew, video: desc1 };
-      }
-      Users.push(isNew);
-      const arr = [...Users];
-      $$invalidate(13, Users = arr);
-    }
+    const { text: text2, cmd } = data;
+    console.log(`__________${origin} says`, cmd, data);
+    if (cmd === "message" && text2)
+      addMessage("bcc: " + origin + " : " + text2);
+    else if (cmd === "offer")
+      updateUsers(data);
   });
   const endCall = (ev) => {
     const target = ev.target;
@@ -1073,7 +1052,7 @@ function instance($$self, $$props, $$invalidate) {
     $$invalidate(0, botUrl = Telegram.getStart());
     $$invalidate(3, startJoin.onclick = join, startJoin);
     bcc.postMessage({
-      type: "guest",
+      cmd: "guest",
       uuid,
       userAgentData: navigator.userAgentData.toJSON()
     });
@@ -1082,7 +1061,7 @@ function instance($$self, $$props, $$invalidate) {
     const puser = User2;
     const user = await Telegram.sendStart();
     $$invalidate(12, User2 = { ...puser, ...user });
-    bcc.postMessage({ type: "teleUser", uuid, User: User2 });
+    bcc.postMessage({ cmd: "teleUser", uuid, User: User2 });
     console.log("join", User2);
     if (User2) {
       $$invalidate(4, startButton.disabled = false, startButton);
