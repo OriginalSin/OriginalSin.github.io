@@ -1,0 +1,8 @@
+{
+  "src/lib/index.js": {
+    "file": "mtNs.umd.js",
+    "name": "index",
+    "src": "src/lib/index.js",
+    "isEntry": true
+  }
+}

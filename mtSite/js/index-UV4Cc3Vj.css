@@ -1,0 +1,80 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+.card {
+  padding: 2em;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: left;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+fieldset.svelte-10m9pd5.svelte-10m9pd5{text-align:left}.textfield.svelte-10m9pd5.svelte-10m9pd5{width:390px}.buttons.svelte-10m9pd5 button.svelte-10m9pd5{display:none}section.svelte-10m9pd5 p.req.svelte-10m9pd5{margin:6px}section.svelte-10m9pd5 p.req.submit.svelte-10m9pd5{text-align:center}section.active.svelte-10m9pd5 button.svelte-10m9pd5:hover{border:1px solid blue}section.svelte-10m9pd5 button.svelte-10m9pd5{pointer-events:none;border:1px solid;opacity:0.5}section.active.svelte-10m9pd5 button.svelte-10m9pd5{pointer-events:auto;opacity:1}section.svelte-10m9pd5 textarea.svelte-10m9pd5:invalid,section.svelte-10m9pd5 input.svelte-10m9pd5:invalid{border:1px solid coral}section.svelte-10m9pd5 .recordTimer.svelte-10m9pd5{position:absolute;background-color:brown;color:#f7f7f7;right:0;margin:6px;padding:0px 4px}section.svelte-10m9pd5 .recordNote.svelte-10m9pd5{position:absolute;color:#f7f7f7;opacity:.85;text-shadow:0 0 2px #111;font-weight:bolder;right:0;top:29px;margin:6px;padding:0px 4px}section.svelte-10m9pd5 p.prepareVideo.svelte-10m9pd5,section.svelte-10m9pd5 .paused.svelte-10m9pd5{position:absolute;width:100%;transform:translateY(-50%);text-align:center;opacity:.85;text-shadow:0 0 2px #111;color:#f7f7f7;display:none}section.svelte-10m9pd5 .teleMail .paused.svelte-10m9pd5{font-size:440%;top:50%}section.svelte-10m9pd5 .teleMail p.prepareVideo.svelte-10m9pd5{font-size:200%;top:30%}section.svelte-10m9pd5 .teleMail .visuals.svelte-10m9pd5{position:relative}section.svelte-10m9pd5 .teleMail .replayVideo.svelte-10m9pd5{width:400px}section.svelte-10m9pd5 .teleMail .visuals.svelte-10m9pd5,section.svelte-10m9pd5 .userMedia.svelte-10m9pd5{width:400px;height:300px}section.svelte-10m9pd5 .teleMail.active .recordTimer,section.svelte-10m9pd5 .teleMail.active.dataavailable .record,section.svelte-10m9pd5 .teleMail.active.dataavailable .userMedia,section.svelte-10m9pd5 .teleMail .resume,section.svelte-10m9pd5 .teleMail .pause,section.svelte-10m9pd5 .teleMail.recording .record,section.svelte-10m9pd5 .teleMail.pause .record,section.svelte-10m9pd5 .teleMail.resume .record,section.svelte-10m9pd5 .teleMail.svelte-10m9pd5,section.svelte-10m9pd5 .recordNote.svelte-10m9pd5,section.svelte-10m9pd5 .replayVideo.svelte-10m9pd5,section.svelte-10m9pd5 .prepareVideo.svelte-10m9pd5,section.svelte-10m9pd5 .userMedia.svelte-10m9pd5{display:none}section.svelte-10m9pd5 .teleMail.active.prepareVideo .prepareVideo,section.svelte-10m9pd5 .teleMail.active.pause .recordTimer,section.svelte-10m9pd5 .teleMail.active.pause .paused,section.svelte-10m9pd5 .teleMail.active.pause .resume,section.svelte-10m9pd5 .teleMail.active.pause .preview,section.svelte-10m9pd5 .teleMail.active.recording .recordTimer,section.svelte-10m9pd5 .teleMail.active.recording .recordNote,section.svelte-10m9pd5 .teleMail.active.recording .preview,section.svelte-10m9pd5 .teleMail.active.recording .pause,section.svelte-10m9pd5 .teleMail.active,section.svelte-10m9pd5 .teleMail .record,section.svelte-10m9pd5 .teleMail.dataavailable .replayVideo,section.svelte-10m9pd5 .teleMail.dataavailable .recordAgain,section.svelte-10m9pd5 .teleMail.active .userMedia{display:inline-block}fieldset.svelte-10m9pd5.svelte-10m9pd5{text-align:left}.textfield.svelte-10m9pd5.svelte-10m9pd5{width:390px}.buttons.svelte-10m9pd5 button.svelte-10m9pd5{display:none}section.svelte-10m9pd5 p.req.svelte-10m9pd5{margin:6px}section.svelte-10m9pd5 p.req.submit.svelte-10m9pd5{text-align:center}section.active.svelte-10m9pd5 button.svelte-10m9pd5:hover{border:1px solid blue}section.svelte-10m9pd5 button.svelte-10m9pd5{pointer-events:none;border:1px solid;opacity:0.5}section.active.svelte-10m9pd5 button.svelte-10m9pd5{pointer-events:auto;opacity:1}section.svelte-10m9pd5 textarea.svelte-10m9pd5:invalid,section.svelte-10m9pd5 input.svelte-10m9pd5:invalid{border:1px solid coral}section.svelte-10m9pd5 .recordTimer.svelte-10m9pd5{position:absolute;background-color:brown;color:#f7f7f7;right:0;margin:6px;padding:0px 4px}section.svelte-10m9pd5 .recordNote.svelte-10m9pd5{position:absolute;color:#f7f7f7;opacity:.85;text-shadow:0 0 2px #111;font-weight:bolder;right:0;top:29px;margin:6px;padding:0px 4px}section.svelte-10m9pd5 p.prepareVideo.svelte-10m9pd5,section.svelte-10m9pd5 .paused.svelte-10m9pd5{position:absolute;width:100%;transform:translateY(-50%);text-align:center;opacity:.85;text-shadow:0 0 2px #111;color:#f7f7f7;display:none}section.svelte-10m9pd5 .teleMail .paused.svelte-10m9pd5{font-size:440%;top:50%}section.svelte-10m9pd5 .teleMail p.prepareVideo.svelte-10m9pd5{font-size:200%;top:30%}section.svelte-10m9pd5 .teleMail .visuals.svelte-10m9pd5{position:relative}section.svelte-10m9pd5 .teleMail .replayVideo.svelte-10m9pd5{width:400px}section.svelte-10m9pd5 .teleMail .visuals.svelte-10m9pd5,section.svelte-10m9pd5 .userMedia.svelte-10m9pd5{width:400px;height:300px}section.svelte-10m9pd5 .teleMail.active .recordTimer,section.svelte-10m9pd5 .teleMail.active.dataavailable .record,section.svelte-10m9pd5 .teleMail.active.dataavailable .userMedia,section.svelte-10m9pd5 .teleMail .resume,section.svelte-10m9pd5 .teleMail .pause,section.svelte-10m9pd5 .teleMail.recording .record,section.svelte-10m9pd5 .teleMail.pause .record,section.svelte-10m9pd5 .teleMail.resume .record,section.svelte-10m9pd5 .teleMail.svelte-10m9pd5,section.svelte-10m9pd5 .recordNote.svelte-10m9pd5,section.svelte-10m9pd5 .replayVideo.svelte-10m9pd5,section.svelte-10m9pd5 .prepareVideo.svelte-10m9pd5,section.svelte-10m9pd5 .userMedia.svelte-10m9pd5{display:none}section.svelte-10m9pd5 .teleMail.active.prepareVideo .prepareVideo,section.svelte-10m9pd5 .teleMail.active.pause .recordTimer,section.svelte-10m9pd5 .teleMail.active.pause .paused,section.svelte-10m9pd5 .teleMail.active.pause .resume,section.svelte-10m9pd5 .teleMail.active.pause .preview,section.svelte-10m9pd5 .teleMail.active.recording .recordTimer,section.svelte-10m9pd5 .teleMail.active.recording .recordNote,section.svelte-10m9pd5 .teleMail.active.recording .preview,section.svelte-10m9pd5 .teleMail.active.recording .pause,section.svelte-10m9pd5 .teleMail.active,section.svelte-10m9pd5 .teleMail .record,section.svelte-10m9pd5 .teleMail.dataavailable .replayVideo,section.svelte-10m9pd5 .teleMail.dataavailable .recordAgain,section.svelte-10m9pd5 .teleMail.active .userMedia{display:inline-block}
