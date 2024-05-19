@@ -600,12 +600,8 @@ email-отправителя:
 			const teleMail = document.getElementsByClassName('teleMail')[0];
 			const form = document.forms.mailer;
 			const vCheckBox = form.record;
-            const handler = (ev)=>{
-                // ev.prevent
-                const type = ev.target.className;
-                debugger
+            let Utils;
 
-            };
             form.addEventListener('submit', (ev)=>{
                 const type = ev.submitter.className;
                 if (nodes[type]) {
@@ -623,10 +619,9 @@ email-отправителя:
                         case 'preview': mtRec.stop();       break;
                         case 'recordAgain':
                             // debugger;
-    clearState(['pause', 'recording', 'resume', 'start', 'dataavailable', 'stop']);
-    createRecorder();
+                            clearState(['pause', 'recording', 'resume', 'start', 'dataavailable', 'stop']);
+                            createRecorder();
 
-                            // mtRec.pause(true);
                             break;
                         default:
                             break;
@@ -656,25 +651,22 @@ email-отправителя:
                 }
              });
 
-            // const host = location.host;
             const nodes = {};
             ['recordTimer', 'replayVideo', 'userMedia', 'playButton',
                 'record', 'pause', 'resume', 'preview', 'recordAgain'
             ].forEach(k=>{
                 const node = teleMail.getElementsByClassName(k)[0];
                 nodes[k] = node;
-                // if (node && node.tagName.toLowerCase() === 'button') {
-                //     node.addEventListener('change', handler);
-                // }
-            })
+            });
             vCheckBox.addEventListener('change', ()=>{
+                Utils = self.mtNs.Utils;
                 const classList = teleMail.classList;
                 if (vCheckBox.checked) {
                     createRecorder();
                     classList.add('active');
                 } else {
                     if(mtRec) {
-                        stopTracks(nodes.userMedia.srcObject);
+                        Utils.stopTracks(nodes.userMedia.srcObject);
                         mtRec.stop();
                     }
 
@@ -684,57 +676,10 @@ email-отправителя:
     // debugger
             });
 
-  function clearState(arr, skip) {
-    const cls = teleMail.classList;
-    arr.forEach(k=>{ if (k !== skip) cls.remove(k); });
-  }
-  function hms(seconds, arr=[3600, 60]) {
-        return arr
-          .reduceRight(
-            (p, b) => r => [Math.floor(r / b)].concat(p(r % b)),
-            r => [r]
-          )(seconds)
-          .map(a => a.toString().padStart(2, '0'))
-          .join(':');
-    }
-    function stopTracks(stream) {
-        stream.getTracks().forEach((track) => {
-            track.stop();
-        });
-    }
-    function delay(timeout) {
-        return  new Promise(resolve => {
-            const id = window.setTimeout(() => {
-                window.clearTimeout(id);
-                resolve({});
-            }, timeout || 1000);
-        });
-    }
-
-    function getAvatar() {
-        const {userMedia, recordTimer, replayVideo, playButton} = nodes;
-        const canvas = document.createElement('canvas');
-        canvas.height = userMedia.videoHeight;
-        canvas.width = userMedia.videoWidth;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(userMedia, 0, 0, canvas.width, canvas.height);
-        
-        // const img1 = new Image();
-
-        // img1.onload = function () {
-            const {width, height} = playButton;
-            const c = [canvas.width / 2, canvas.height / 2];
-            ctx.drawImage(playButton,
-            0, 0, width, height,
-            c[0] - 40, c[1] - 40, 80, 120
-            );
-            avatar = canvas.toDataURL();
-        //     img1.remove();
-        // };
-        // document.body.append(img1);
-        // img1.src = './play.png';
-        // img1.style.visibility = 'hidden';
-    }
+            function clearState(arr, skip) {
+                const cls = teleMail.classList;
+                arr.forEach(k=>{ if (k !== skip) cls.remove(k); });
+            }
 
 			async function createRecorder(opt={}) {
 				if (mtRec) mtRec.stop();
@@ -756,7 +701,7 @@ email-отправителя:
 					  const classList = teleMail.classList;
 					  clearState(['pause', 'recording', 'resume'], type);
 					  const eTime = timeLimit - timer;
-					  recordTimer.innerHTML = hms(eTime, [60]);
+					  recordTimer.innerHTML = Utils.hms(eTime, [60]);
 			 
 					  if (type === 'media' && userMedia) {
 						  userMedia.srcObject = ev.stream.clone();
@@ -770,9 +715,9 @@ email-отправителя:
 						
 						  let source = replayVideo.getElementsByTagName('source')[0];
 						  if (source) source.remove();
-						  stopTracks(userMedia.srcObject);
+						  Utils.stopTracks(userMedia.srcObject);
 
-						  await delay(2000);
+						  await Utils.delay(2000);
 						  source = document.createElement('source');
 						  source.setAttribute('src', 'https:' + linkMp4);
 						  source.setAttribute('type', 'video/mp4');
@@ -782,7 +727,7 @@ email-отправителя:
 
 					  } else if (type === 'start') {
 						  classList.add('recording');
-						  getAvatar();
+						  Utils.getAvatar();
 					  } else if (type === 'resume') {
 						  classList.add('recording');
 					  } else if (type === 'recording') {
