@@ -683,7 +683,7 @@ email-отправителя:
 
 			async function createRecorder(opt={}) {
 				if (mtRec) mtRec.stop();
-                const {userMedia, recordTimer, replayVideo} = nodes;
+                const {userMedia, recordTimer, replayVideo, playButton} = nodes;
                 const host = '//moretele.ru';
 
                 // let fileName = '';
@@ -697,7 +697,7 @@ email-отправителя:
 				  nick: username || 'guest',
 				  stateInfo: async ev => {
 					  const {type, timer = 0, link} = ev;
-					  fileName = ev.fileName;
+                      if (ev.fileName) fileName = ev.fileName;
 					  const classList = teleMail.classList;
 					  clearState(['pause', 'recording', 'resume'], type);
 					  const eTime = timeLimit - timer;
@@ -727,7 +727,7 @@ email-отправителя:
 
 					  } else if (type === 'start') {
 						  classList.add('recording');
-						  avatar = Utils.getAvatar();
+						  avatar = Utils.getAvatar(userMedia, playButton);
 					  } else if (type === 'resume') {
 						  classList.add('recording');
 					  } else if (type === 'recording') {
