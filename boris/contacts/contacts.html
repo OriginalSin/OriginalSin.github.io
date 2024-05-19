@@ -596,7 +596,7 @@ email-отправителя:
 
 		<script type="module" src="https://moretele.ru/mtSite/js/mtNs.js"></script>
         <script>
-			let mtRec, avatar, mailSended;
+			let mtRec, avatar, mailSended, uuid = 5, fileName = '';
 			const teleMail = document.getElementsByClassName('teleMail')[0];
 			const form = document.forms.mailer;
 			const vCheckBox = form.record;
@@ -686,7 +686,7 @@ email-отправителя:
                 const {userMedia, recordTimer, replayVideo} = nodes;
                 const host = '//moretele.ru';
 
-                let fileName = '';
+                // let fileName = '';
                 const username = document.forms.mailer.name.value;
 				const timeLimit = 3 * 60; // в сек.
 				mtRec = await self.mtNs.Mrecorder({
