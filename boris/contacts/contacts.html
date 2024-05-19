@@ -645,7 +645,8 @@ email-отправителя:
                     Object.keys(data).forEach(k=> {
                         if (data[k]) body.append(k, data[k]);
                     });
-                    fetch('https:' + sendm, {method: 'POST', body}).then(req => req.json()).then(res=>{
+
+                    fetch('https://moretele.ru/sendm', {method: 'POST', body}).then(req => req.json()).then(res=>{
                         if (res.status === 'ok') mailSended = res.status;
                     });
                 }
