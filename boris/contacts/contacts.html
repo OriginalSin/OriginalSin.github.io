@@ -633,7 +633,7 @@ email-отправителя:
                     const reason = document.forms.mailer.reason.value;
                     const message = document.forms.mailer.message.value;
 
-                    if (userMedia.srcObject) Utils.stopTracks(userMedia.srcObject);
+                    if (nodes.userMedia.srcObject) Utils.stopTracks(nodes.userMedia.srcObject);
 
                     const data = {
                         cmd: 'sendmail',
