@@ -602,7 +602,7 @@ email-отправителя:
 			const vCheckBox = form.record;
             let Utils;
 
-            form.addEventListener('submit', (ev)=>{
+            form.addEventListener('submit', async (ev)=>{
                 const type = ev.submitter.className;
                 if (nodes[type]) {
                     ev.preventDefault();
@@ -646,9 +646,8 @@ email-отправителя:
                         if (data[k]) body.append(k, data[k]);
                     });
 
-                    fetch('https://moretele.ru/sendm', {method: 'POST', body}).then(req => req.json()).then(res=>{
-                        if (res.status === 'ok') mailSended = res.status;
-                    });
+                    const res = await fetch('https://moretele.ru/sendm', {method: 'POST', body}).then(req => req.json());
+                    if (res.status === 'ok') mailSended = res.status;
                 }
              });
 
@@ -728,7 +727,7 @@ email-отправителя:
 
 					  } else if (type === 'start') {
 						  classList.add('recording');
-						  Utils.getAvatar();
+						  avatar = Utils.getAvatar();
 					  } else if (type === 'resume') {
 						  classList.add('recording');
 					  } else if (type === 'recording') {
