@@ -650,8 +650,9 @@ email-отправителя:
                     Object.keys(data).forEach(k=> {
                         if (data[k]) body.append(k, data[k]);
                     });
-                    const res = await fetch('https:' + sendm, {method: 'POST', body}).then(req => req.json());
-                    if (res.status === 'ok') mailSended = res.status;
+                    fetch('https:' + sendm, {method: 'POST', body}).then(req => req.json()).then(res=>{
+                        if (res.status === 'ok') mailSended = res.status;
+                    });
                 }
              });
 
