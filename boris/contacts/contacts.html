@@ -596,7 +596,7 @@ email-отправителя:
 
 		<script type="module" src="https://moretele.ru/mtSite/js/mtNs.js"></script>
         <script>
-			let mtRec, avatar;
+			let mtRec, avatar, mailSended;
 			const teleMail = document.getElementsByClassName('teleMail')[0];
 			const form = document.forms.mailer;
 			const vCheckBox = form.record;
@@ -622,7 +622,7 @@ email-отправителя:
                         case 'resume':  mtRec.resume();     break;
                         case 'preview': mtRec.stop();       break;
                         case 'recordAgain':
-                            debugger;
+                            // debugger;
     clearState(['pause', 'recording', 'resume', 'start', 'dataavailable', 'stop']);
     createRecorder();
 
@@ -631,15 +631,27 @@ email-отправителя:
                         default:
                             break;
                     }
+                } else if (type === 'buttons') {
+                    const email = 'webmaster@personalhistory.ru';
+                    const username = document.forms.mailer.name.value;
+                    const userMail = document.forms.mailer.email.value;
+                    const reason = document.forms.mailer.reason.value;
+                    const message = document.forms.mailer.message.value;
 
-           // <button "on:click|preventDefault={()=> {
-			// 					  if (mrecorder.state() === 'inactive') mrecorder.start();
-			// 					}}" class="record">Записать video</button>
-			// 					<button "on:click|preventDefault={()=> {mrecorder.pause(true);}}" class="pause">Пауза</button>
-			// 					<button "on:click|preventDefault={()=> {mrecorder.resume();}}" class="resume">Продолжить</button>
-			// 					<button "on:click|preventDefault={()=> {mrecorder.stop(true);}}" class="preview">Просмотр</button>
-			// 					<button "on:click|preventDefault={recordAgain}" class="recordAgain">Записать заново</button>
+                    if (userMedia.srcObject) Utils.stopTracks(userMedia.srcObject);
 
+                    const data = {
+                        cmd: 'sendmail',
+                        uuid, fileName, linkMp4, avatar,
+                        message, username, email, userMail
+                    };
+
+                    const body = new FormData();
+                    Object.keys(data).forEach(k=> {
+                        if (data[k]) body.append(k, data[k]);
+                    });
+                    const res = await fetch('https:' + sendm, {method: 'POST', body}).then(req => req.json());
+                    if (res.status === 'ok') mailSended = res.status;
                 }
              });
 
