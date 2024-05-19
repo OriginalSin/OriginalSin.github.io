@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+
+        <script async="" src="https://mc.yandex.ru/metrika/tag.js"></script>
+        <script type="text/javascript" data-pagespeed-no-defer="">
+            (function () {
+                function f(a, b, d) {
+                    if (a.addEventListener) a.addEventListener(b, d, !1);
+                    else if (a.attachEvent) a.attachEvent("on" + b, d);
+                    else {
+                        var c = a["on" + b];
+                        a["on" + b] = function () {
+                            d.call(this);
+                            c && c.call(this);
+                        };
+                    }
+                }
+                window.pagespeed = window.pagespeed || {};
+                var g = window.pagespeed;
+                function k(a) {
+                    this.g = [];
+                    this.f = 0;
+                    this.h = !1;
+                    this.j = a;
+                    this.i = null;
+                    this.l = 0;
+                    this.b = !1;
+                    this.a = 0;
+                }
+                function l(a, b) {
+                    var d = b.getAttribute("data-pagespeed-lazy-position");
+                    if (d) return parseInt(d, 0);
+                    var d = b.offsetTop,
+                        c = b.offsetParent;
+                    c && (d += l(a, c));
+                    d = Math.max(d, 0);
+                    b.setAttribute("data-pagespeed-lazy-position", d);
+                    return d;
+                }
+                function m(a, b) {
+                    var d, c, e;
+                    if (!a.b && (0 == b.offsetHeight || 0 == b.offsetWidth)) return !1;
+                    a: if (b.currentStyle) c = b.currentStyle.position;
+                    else {
+                        if (document.defaultView && document.defaultView.getComputedStyle && (c = document.defaultView.getComputedStyle(b, null))) {
+                            c = c.getPropertyValue("position");
+                            break a;
+                        }
+                        c = b.style && b.style.position ? b.style.position : "";
+                    }
+                    if ("relative" == c) return !0;
+                    e = 0;
+                    "number" == typeof window.pageYOffset
+                        ? (e = window.pageYOffset)
+                        : document.body && document.body.scrollTop
+                        ? (e = document.body.scrollTop)
+                        : document.documentElement && document.documentElement.scrollTop && (e = document.documentElement.scrollTop);
+                    d = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+                    c = e;
+                    e += d;
+                    var h = b.getBoundingClientRect();
+                    h ? ((e = h.top - d), (c = h.bottom)) : ((h = l(a, b)), (d = h + b.offsetHeight), (e = h - e), (c = d - c));
+                    return e <= a.f && 0 <= c + a.f;
+                }
+                k.prototype.m = function (a) {
+                    p(a);
+                    var b = this;
+                    window.setTimeout(function () {
+                        var d = a.getAttribute("data-pagespeed-lazy-src");
+                        if (d)
+                            if ((b.h || m(b, a)) && -1 != a.src.indexOf(b.j)) {
+                                var c = a.parentNode,
+                                    e = a.nextSibling;
+                                c && c.removeChild(a);
+                                a.c && (a.getAttribute = a.c);
+                                a.removeAttribute("onload");
+                                a.tagName &&
+                                    "IMG" == a.tagName &&
+                                    g.CriticalImages &&
+                                    f(a, "load", function () {
+                                        g.CriticalImages.checkImageForCriticality(this);
+                                        b.b && (b.a--, b.a || g.CriticalImages.checkCriticalImages());
+                                    });
+                                a.removeAttribute("data-pagespeed-lazy-src");
+                                a.removeAttribute("data-pagespeed-lazy-replaced-functions");
+                                c && c.insertBefore(a, e);
+                                if ((c = a.getAttribute("data-pagespeed-lazy-srcset"))) (a.srcset = c), a.removeAttribute("data-pagespeed-lazy-srcset");
+                                a.src = d;
+                            } else b.g.push(a);
+                    }, 0);
+                };
+                k.prototype.loadIfVisibleAndMaybeBeacon = k.prototype.m;
+                k.prototype.s = function () {
+                    this.h = !0;
+                    q(this);
+                };
+                k.prototype.loadAllImages = k.prototype.s;
+                function q(a) {
+                    var b = a.g,
+                        d = b.length;
+                    a.g = [];
+                    for (var c = 0; c < d; ++c) a.m(b[c]);
+                }
+                function t(a, b) {
+                    return a.a ? null != a.a(b) : null != a.getAttribute(b);
+                }
+                k.prototype.u = function () {
+                    for (var a = document.getElementsByTagName("img"), b = 0, d; (d = a[b]); b++) t(d, "data-pagespeed-lazy-src") && p(d);
+                };
+                k.prototype.overrideAttributeFunctions = k.prototype.u;
+                function p(a) {
+                    t(a, "data-pagespeed-lazy-replaced-functions") ||
+                        ((a.c = a.getAttribute),
+                        (a.getAttribute = function (a) {
+                            "src" == a.toLowerCase() && t(this, "data-pagespeed-lazy-src") && (a = "data-pagespeed-lazy-src");
+                            return this.c(a);
+                        }),
+                        a.setAttribute("data-pagespeed-lazy-replaced-functions", "1"));
+                }
+                g.o = function (a, b) {
+                    function d() {
+                        if (!((c.b && a) || c.i)) {
+                            var b = 200;
+                            200 < new Date().getTime() - c.l && (b = 0);
+                            c.i = window.setTimeout(function () {
+                                c.l = new Date().getTime();
+                                q(c);
+                                c.i = null;
+                            }, b);
+                        }
+                    }
+                    var c = new k(b);
+                    g.lazyLoadImages = c;
+                    f(window, "load", function () {
+                        c.b = !0;
+                        c.h = a;
+                        c.f = 200;
+                        if (g.CriticalImages) {
+                            for (var b = 0, d = document.getElementsByTagName("img"), r = 0, n; (n = d[r]); r++) -1 != n.src.indexOf(c.j) && t(n, "data-pagespeed-lazy-src") && b++;
+                            c.a = b;
+                            c.a || g.CriticalImages.checkCriticalImages();
+                        }
+                        q(c);
+                    });
+                    b.indexOf("data") && (new Image().src = b);
+                    f(window, "scroll", d);
+                    f(window, "resize", d);
+                };
+                g.lazyLoadInit = g.o;
+            })();
+
+            pagespeed.lazyLoadInit(true, "/pagespeed_static/1.JiBnMqyl6S.gif");
+        </script>
+        <script>
+            (function (m, e, t, r, i, k, a) {
+                m[i] =
+                    m[i] ||
+                    function () {
+                        (m[i].a = m[i].a || []).push(arguments);
+                    };
+                m[i].l = 1 * new Date();
+                (k = e.createElement(t)), (a = e.getElementsByTagName(t)[0]), (k.async = 1), (k.src = r), a.parentNode.insertBefore(k, a);
+            })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+            ym(68915848, "init", { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true });
+        </script>
+
+    </head>
+
+    <body>
+        <noscript>
+            <div><img src="https://mc.yandex.ru/watch/68915848" style="position: absolute; left: -9999px;" alt="" /></div>
+        </noscript>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <title>Написать письмо автору сайта</title>
+
+        <noscript>
+            <meta http-equiv="refresh" content="0;url='https://personalhistory.ru/email.htm?PageSpeed=noscript'" />
+            <style>
+                <!--table,div,span,font,p{display:none} -->
+            </style>
+            <div style="display: block;">Please click <a href="https://personalhistory.ru/email.htm?PageSpeed=noscript">here</a> if you are not redirected within a few seconds.</div>
+        </noscript>
+        <hr />
+        <table>
+            <tbody>
+                <tr>
+                    <td width="90%">
+                        <a href="/">Домой</a> <a href="/forum/index.php">Форум</a> <a href="/forum_old/index.html">Архив форума</a> <a href="http://spiski-ru.blogspot.com/">Блог</a> <a href="/db/db.php">SQL-Базы</a>
+                        <a href="/dso.htm">DSO-базы</a> <a href="/geno.htm">Гено-базы</a> <a href="/projects/index.html">Проекты</a> <a href="/papers/">Статьи</a> <a href="/docs.htm">Документы</a> <a href="/booksNL.htm">Книги</a>
+                        <a href="/chat.htm">Чат</a>
+                        <a href="/rss.xml">
+                            <script type="text/javascript" data-pagespeed-no-defer="">
+                                (function () {
+                                    function d(b) {
+                                        var a = window;
+                                        if (a.addEventListener) a.addEventListener("load", b, !1);
+                                        else if (a.attachEvent) a.attachEvent("onload", b);
+                                        else {
+                                            var c = a.onload;
+                                            a.onload = function () {
+                                                b.call(this);
+                                                c && c.call(this);
+                                            };
+                                        }
+                                    }
+                                    var p =
+                                        Date.now ||
+                                        function () {
+                                            return +new Date();
+                                        };
+                                    window.pagespeed = window.pagespeed || {};
+                                    var q = window.pagespeed;
+                                    function r() {
+                                        this.a = !0;
+                                    }
+                                    r.prototype.c = function (b) {
+                                        b = parseInt(b.substring(0, b.indexOf(" ")), 10);
+                                        return !isNaN(b) && b <= p();
+                                    };
+                                    r.prototype.hasExpired = r.prototype.c;
+                                    r.prototype.b = function (b) {
+                                        return b.substring(b.indexOf(" ", b.indexOf(" ") + 1) + 1);
+                                    };
+                                    r.prototype.getData = r.prototype.b;
+                                    r.prototype.f = function (b) {
+                                        var a = document.getElementsByTagName("script"),
+                                            a = a[a.length - 1];
+                                        a.parentNode.replaceChild(b, a);
+                                    };
+                                    r.prototype.replaceLastScript = r.prototype.f;
+                                    r.prototype.g = function (b) {
+                                        var a = window.localStorage.getItem("pagespeed_lsc_url:" + b),
+                                            c = document.createElement(a ? "style" : "link");
+                                        a && !this.c(a) ? ((c.type = "text/css"), c.appendChild(document.createTextNode(this.b(a)))) : ((c.rel = "stylesheet"), (c.href = b), (this.a = !0));
+                                        this.f(c);
+                                    };
+                                    r.prototype.inlineCss = r.prototype.g;
+                                    r.prototype.h = function (b, a) {
+                                        var c = window.localStorage.getItem("pagespeed_lsc_url:" + b + " pagespeed_lsc_hash:" + a),
+                                            f = document.createElement("img");
+                                        c && !this.c(c) ? (f.src = this.b(c)) : ((f.src = b), (this.a = !0));
+                                        for (var c = 2, k = arguments.length; c < k; ++c) {
+                                            var g = arguments[c].indexOf("=");
+                                            f.setAttribute(arguments[c].substring(0, g), arguments[c].substring(g + 1));
+                                        }
+                                        this.f(f);
+                                    };
+                                    r.prototype.inlineImg = r.prototype.h;
+                                    function t(b, a, c, f) {
+                                        a = document.getElementsByTagName(a);
+                                        for (var k = 0, g = a.length; k < g; ++k) {
+                                            var e = a[k],
+                                                m = e.getAttribute("data-pagespeed-lsc-hash"),
+                                                h = e.getAttribute("data-pagespeed-lsc-url");
+                                            if (m && h) {
+                                                h = "pagespeed_lsc_url:" + h;
+                                                c && (h += " pagespeed_lsc_hash:" + m);
+                                                var l = e.getAttribute("data-pagespeed-lsc-expiry"),
+                                                    l = l ? new Date(l).getTime() : "",
+                                                    e = f(e);
+                                                if (!e) {
+                                                    var n = window.localStorage.getItem(h);
+                                                    n && (e = b.b(n));
+                                                }
+                                                e && (window.localStorage.setItem(h, l + " " + m + " " + e), (b.a = !0));
+                                            }
+                                        }
+                                    }
+                                    function u(b) {
+                                        t(b, "img", !0, function (a) {
+                                            return a.src;
+                                        });
+                                        t(b, "style", !1, function (a) {
+                                            return a.firstChild ? a.firstChild.nodeValue : null;
+                                        });
+                                    }
+                                    q.i = function () {
+                                        if (window.localStorage) {
+                                            var b = new r();
+                                            q.localStorageCache = b;
+                                            d(function () {
+                                                u(b);
+                                            });
+                                            d(function () {
+                                                if (b.a) {
+                                                    for (var a = [], c = [], f = 0, k = p(), g = 0, e = window.localStorage.length; g < e; ++g) {
+                                                        var m = window.localStorage.key(g);
+                                                        if (!m.indexOf("pagespeed_lsc_url:")) {
+                                                            var h = window.localStorage.getItem(m),
+                                                                l = h.indexOf(" "),
+                                                                n = parseInt(h.substring(0, l), 10);
+                                                            if (!isNaN(n))
+                                                                if (n <= k) {
+                                                                    a.push(m);
+                                                                    continue;
+                                                                } else if (n < f || !f) f = n;
+                                                            c.push(h.substring(l + 1, h.indexOf(" ", l + 1)));
+                                                        }
+                                                    }
+                                                    k = "";
+                                                    f && (k = "; expires=" + new Date(f).toUTCString());
+                                                    document.cookie = "_GPSLSC=" + c.join("!") + k;
+                                                    g = 0;
+                                                    for (e = a.length; g < e; ++g) window.localStorage.removeItem(a[g]);
+                                                    b.a = !1;
+                                                }
+                                            });
+                                        }
+                                    };
+                                    q.localStorageCacheInit = q.i;
+                                })();
+                                pagespeed.localStorageCacheInit();
+                            </script>
+                            <img align="absmiddle" data-pagespeed-lsc-url="https://personalhistory.ru/rss.gif" src="/rss.gif" onerror="this.onerror=null;pagespeed.lazyLoadImages.loadIfVisibleAndMaybeBeacon(this);" />
+                        </a>
+
+                        <a href="/email.htm" target="_blank">Письмо автору</a>
+                    </td>
+                    <td width="10%">
+                        <script type="text/javascript" data-pagespeed-no-defer="">
+                            pagespeed.lazyLoadImages.overrideAttributeFunctions();
+                        </script>
+                        <script src="/orphus/orphus.js">
+                            <xsl:text>javascript here</xsl:text>
+                        </script>
+                        <a href="http://orphus.ru" id="orphus" target="_blank" title="Система Orphus">
+                            <img
+                                alt="Система Orphus"
+                                border="0"
+                                width="257"
+                                height="48"
+                                data-pagespeed-lsc-url="https://personalhistory.ru/orphus/Oleg_Fadjarov_btn1.gif"
+                                src="/orphus/Oleg_Fadjarov_btn1.gif"
+                                onerror="this.onerror=null;pagespeed.lazyLoadImages.loadIfVisibleAndMaybeBeacon(this);"
+                            />
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr />
+        <h2><center>Написать письмо автору сайта</center></h2>
+        <form action="/email.php" name="mailer">
+            <table align="center">
+                <tbody>
+                    <tr>
+                        <td>Ваше имя</td>
+                        <td><input type="text" size="30" name="name" maxlength="50" />Укажите здесь свои имя и фамилию</td>
+                    </tr>
+                    <tr>
+                        <td>Ваш е-mail</td>
+                        <td><input type="text" name="email" size="30" maxlength="50" />Здесь надо оставить свой емайл (если есть) - иначе я не смогу ответить Вам ..</td>
+                    </tr>
+                    <tr>
+                        <td>Тема</td>
+                        <td><input type="text" size="30" name="reason" maxlength="50" />Укажите здесь тему сообщения</td>
+                    </tr>
+                    <tr class="teleMailContent">
+                        <td style="vertical-align: top;"><input type="checkbox" name="record" /></td>
+                        <td>
+							<div class="label">
+							    <label for="record">Включить видео комментарий</label>
+                            </div>
+
+							<div class="teleMail">
+							  <div class="visuals">
+								<video class="replayVideo" autoplay playsinline controls preload="auto">
+								  <source type="video/webm" />
+								  <track kind="captions" />
+								</video>
+								<video class="userMedia" playsinline>
+								  <track kind="captions" />
+								</video>
+								<div class="prepareVideo">
+                                    <p class="">Подготовка видео ролика</p>
+                                </div>
+								<div class="paused">
+								  <p class="pausedHeader">Пауза</p>
+								</div>
+								<div class="recordNote">
+                                    <p class="">REC</p>
+                                </div>
+
+								<div class="recordTimer">
+                                    <p class=""></p>
+                                </div>
+
+							  </div>
+							  <div class="buttons">
+								<button class="record">Записать video</button>
+								<button class="pause">Пауза</button>
+								<button class="resume">Продолжить</button>
+								<button class="preview">Просмотр</button>
+								<button class="recordAgain">Записать заново</button>
+							  </div>
+                              <img src="./play.png" class="playButton" alt='' />
+							</div>
+						</td>
+                    </tr>
+                    <tr>
+                        <td>Текст письма</td>
+                        <td>
+                            <textarea name="message" cols="40" rows="10">
+Здесь надо вставить текст Вашего сообщения. Если Вы ничего здесь не напишете, толку от письма не будет. Поняли мою мысль? Чудненько! Тогда замените весь этот текст своим сообщением.
+                            </textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Отправить" class="buttons" /> &nbsp; <input value="Сброс" type="reset" class="buttons" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        20.01.11 Приятно было получить емайл следующего содержания
+        <pre>
+от Виктор Гончарук
+email-отправителя:
+тема: поиск
+текст письма: Ищу место захоронения своего деда.Погиб и захоронен в Польше	
+
+        </pre>
+        Только есть одна закавыка - Виктор забыл указать свой емайл. Вывод - не смогу я ему ничего ответить. Увы и ах..
+        <hr />
+        <table>
+            <tbody>
+                <tr>
+                    <td width="90%">
+                        <a href="/">Домой</a> <a href="/forum/index.php">Форум</a> <a href="/forum_old/index.html">Архив форума</a> <a href="http://spiski-ru.blogspot.com/">Блог</a> <a href="/db/db.php">SQL-Базы</a>
+                        <a href="/dso.htm">DSO-базы</a> <a href="/geno.htm">Гено-базы</a> <a href="/projects/index.html">Проекты</a> <a href="/papers/">Статьи</a> <a href="/docs.htm">Документы</a> <a href="/booksNL.htm">Книги</a>
+                        <a href="/chat.htm">Чат</a>
+                        <a href="/rss.xml"><img align="absmiddle" data-pagespeed-lsc-url="https://personalhistory.ru/rss.gif" src="/rss.gif" onerror="this.onerror=null;pagespeed.lazyLoadImages.loadIfVisibleAndMaybeBeacon(this);" /></a>
+                        <a href="/email.htm" target="_blank">Письмо автору</a>
+                    </td>
+                    <td width="10%">
+                        <script type="text/javascript" data-pagespeed-no-defer="">
+                            pagespeed.lazyLoadImages.overrideAttributeFunctions();
+                        </script>
+                        <script src="/orphus/orphus.js">
+                            <xsl:text>javascript here</xsl:text>
+                        </script>
+                        <a href="http://orphus.ru" id="orphus" target="_blank">
+                            <img
+                                alt="Система Orphus"
+                                border="0"
+                                width="257"
+                                height="48"
+                                data-pagespeed-lsc-url="https://personalhistory.ru/orphus/Oleg_Fadjarov_btn1.gif"
+                                src="/orphus/Oleg_Fadjarov_btn1.gif"
+                                onerror="this.onerror=null;pagespeed.lazyLoadImages.loadIfVisibleAndMaybeBeacon(this);"
+                            />
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr />
+        Комментарии приветствуются <a href="mailto:webmaster@personalhistory.ru">webmaster@personalhistory.ru</a>. <br />
+        © 2008 Борис Алексеев. Использование, иное, чем для персональных образовательных целей, требует согласования. <br />
+        <b><font size="-1">Последнее изменение 24.02.2019 19:24:46</font></b>
+        <hr />
+        <script type="text/javascript" data-pagespeed-no-defer="">
+            pagespeed.lazyLoadImages.overrideAttributeFunctions();
+        </script>
+		
+		<!-- begin: Вставка TeleMore  -->
+		<style>
+
+.teleMailContent {
+    text-align: left;
+
+    /* display: none; */
+}
+.teleMail {
+    /* display: none; */
+}
+.teleMail .buttons button {
+    /* display: none; */
+}
+.teleMail .buttons button,
+.teleMail.active .recordTimer,
+.teleMail.active.dataavailable .record,
+.teleMail.active.recording .record,
+.teleMail.active.pause .record,
+.teleMail.active.dataavailable .userMedia,
+.teleMail .resume,
+
+.teleMail .pause,
+.teleMail.recording .record,
+.teleMail.pause .record,
+.teleMail.resume .record,
+.teleMail,
+.teleMail .recordNote,
+.teleMail .replayVideo,
+.teleMail .prepareVideo,
+.teleMail .userMedia {
+  display: none;
+}
+.teleMail.active.prepareVideo .prepareVideo,
+.teleMail.active.pause .recordTimer,
+.teleMail.active.pause .paused,
+.teleMail.active.pause .resume,
+.teleMail.active.pause .preview,
+.teleMail.active.recording .recordTimer,
+.teleMail.active.recording .recordNote,
+.teleMail.active.recording .preview,
+.teleMail.active.recording .pause,
+.teleMail.active,
+.teleMail.active .record,
+.teleMail.dataavailable .replayVideo,
+.teleMail.dataavailable .recordAgain,
+.teleMail.active .userMedia {
+  display: inline-block;
+}
+
+.teleMail .visuals,
+.teleMail .userMedia,
+.teleMail .replayVideo {
+  width: 300px;
+
+}
+.teleMail .visuals,
+.teleMail .userMedia {
+  padding-bottom: 4px;
+}
+.teleMail .recordTimer {
+    background-color: brown;
+}
+.teleMail .recordTimer,
+.teleMail .recordNote {
+    position: absolute;
+    color: #f7f7f7;
+    right: 0;
+    margin: 6px;
+    padding: 0px 4px;
+}
+.teleMail .recordNote {
+    opacity: .85;
+    text-shadow: 0 0 2px #111;
+    font-weight: bolder;
+    top: 8px;
+}
+.teleMail .prepareVideo {
+    /* position: relative; */
+    /* top: -228px; */
+
+}
+
+.teleMail .prepareVideo,
+.teleMail .paused {
+    position: absolute;
+    left: 0;
+    /* top: -228px; */
+    width: 300px;
+    font-size: xxx-large;
+    /* width: 100%;
+    transform: translateY(-50%); */
+    text-align: center;
+    opacity: .85;
+    text-shadow: 0 0 2px #111;
+    color: #f7f7f7;
+    display: none;
+}
+.teleMail .paused {
+  font-size: 440%;
+  /* top: 50%; */
+}
+.teleMail p.prepareVideo {
+    font-size: 200%;
+    top: 30%;
+}
+
+.teleMail .visuals {
+  position: relative;
+}
+.teleMail img.playButton {
+  visibility: hidden;
+  position: absolute;
+}
+.teleMail.active button {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.teleMail p.req {
+  margin: 6px;
+  width: 300px;
+  display: block;
+}
+
+.teleMail p.req.submit {
+  text-align: center;
+}
+		</style>
+
+		<script type="module" src="https://moretele.ru/mtSite/js/mtNs.js"></script>
+        <script>
+			let mtRec, avatar;
+			const teleMail = document.getElementsByClassName('teleMail')[0];
+			const form = document.forms.mailer;
+			const vCheckBox = form.record;
+            const handler = (ev)=>{
+                // ev.prevent
+                const type = ev.target.className;
+                debugger
+
+            };
+            form.addEventListener('submit', (ev)=>{
+                const type = ev.submitter.className;
+                if (nodes[type]) {
+                    ev.preventDefault();
+                    if (!mtRec) {
+                        alert('Рано нажали кнопку!');
+                        return;
+                    }
+                    switch (type) {
+                        case 'record':
+                           if (mtRec.state() === 'inactive') mtRec.start();
+                           break;
+                        case 'pause':   mtRec.pause(true);  break;
+                        case 'resume':  mtRec.resume();     break;
+                        case 'preview': mtRec.stop();       break;
+                        case 'recordAgain':
+                            debugger;
+    clearState(['pause', 'recording', 'resume', 'start', 'dataavailable', 'stop']);
+    createRecorder();
+
+                            // mtRec.pause(true);
+                            break;
+                        default:
+                            break;
+                    }
+
+           // <button "on:click|preventDefault={()=> {
+			// 					  if (mrecorder.state() === 'inactive') mrecorder.start();
+			// 					}}" class="record">Записать video</button>
+			// 					<button "on:click|preventDefault={()=> {mrecorder.pause(true);}}" class="pause">Пауза</button>
+			// 					<button "on:click|preventDefault={()=> {mrecorder.resume();}}" class="resume">Продолжить</button>
+			// 					<button "on:click|preventDefault={()=> {mrecorder.stop(true);}}" class="preview">Просмотр</button>
+			// 					<button "on:click|preventDefault={recordAgain}" class="recordAgain">Записать заново</button>
+
+                }
+             });
+
+            // const host = location.host;
+            const nodes = {};
+            ['recordTimer', 'replayVideo', 'userMedia', 'playButton',
+                'record', 'pause', 'resume', 'preview', 'recordAgain'
+            ].forEach(k=>{
+                const node = teleMail.getElementsByClassName(k)[0];
+                nodes[k] = node;
+                // if (node && node.tagName.toLowerCase() === 'button') {
+                //     node.addEventListener('change', handler);
+                // }
+            })
+            vCheckBox.addEventListener('change', ()=>{
+                const classList = teleMail.classList;
+                if (vCheckBox.checked) {
+                    createRecorder();
+                    classList.add('active');
+                } else {
+                    if(mtRec) {
+                        stopTracks(nodes.userMedia.srcObject);
+                        mtRec.stop();
+                    }
+
+                    classList.remove('start');
+                    classList.remove('active');
+                }
+    // debugger
+            });
+
+  function clearState(arr, skip) {
+    const cls = teleMail.classList;
+    arr.forEach(k=>{ if (k !== skip) cls.remove(k); });
+  }
+  function hms(seconds, arr=[3600, 60]) {
+        return arr
+          .reduceRight(
+            (p, b) => r => [Math.floor(r / b)].concat(p(r % b)),
+            r => [r]
+          )(seconds)
+          .map(a => a.toString().padStart(2, '0'))
+          .join(':');
+    }
+    function stopTracks(stream) {
+        stream.getTracks().forEach((track) => {
+            track.stop();
+        });
+    }
+    function delay(timeout) {
+        return  new Promise(resolve => {
+            const id = window.setTimeout(() => {
+                window.clearTimeout(id);
+                resolve({});
+            }, timeout || 1000);
+        });
+    }
+
+    function getAvatar() {
+        const {userMedia, recordTimer, replayVideo, playButton} = nodes;
+        const canvas = document.createElement('canvas');
+        canvas.height = userMedia.videoHeight;
+        canvas.width = userMedia.videoWidth;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(userMedia, 0, 0, canvas.width, canvas.height);
+        
+        // const img1 = new Image();
+
+        // img1.onload = function () {
+            const {width, height} = playButton;
+            const c = [canvas.width / 2, canvas.height / 2];
+            ctx.drawImage(playButton,
+            0, 0, width, height,
+            c[0] - 40, c[1] - 40, 80, 120
+            );
+            avatar = canvas.toDataURL();
+        //     img1.remove();
+        // };
+        // document.body.append(img1);
+        // img1.src = './play.png';
+        // img1.style.visibility = 'hidden';
+    }
+
+			async function createRecorder(opt={}) {
+				if (mtRec) mtRec.stop();
+                const {userMedia, recordTimer, replayVideo} = nodes;
+                const host = '//moretele.ru';
+
+                let fileName = '';
+                const username = document.forms.mailer.name.value;
+				const timeLimit = 3 * 60; // в сек.
+				mtRec = await self.mtNs.Mrecorder({
+				  userMedia,
+				  timeLimit,
+				  url: `${host}/cvideo`,
+				  uuid: 4,
+				  nick: username || 'guest',
+				  stateInfo: async ev => {
+					  const {type, timer = 0, link} = ev;
+					  fileName = ev.fileName;
+					  const classList = teleMail.classList;
+					  clearState(['pause', 'recording', 'resume'], type);
+					  const eTime = timeLimit - timer;
+					  recordTimer.innerHTML = hms(eTime, [60]);
+			 
+					  if (type === 'media' && userMedia) {
+						  userMedia.srcObject = ev.stream.clone();
+						  userMedia.volume = 0.2;
+						  userMedia.play();
+				  
+					  } else if (type === 'stop') {
+					  } else if (type === 'dataavailable') {
+						  classList.add('prepareVideo');
+						  linkMp4 = `${host}${link}`;
+						
+						  let source = replayVideo.getElementsByTagName('source')[0];
+						  if (source) source.remove();
+						  stopTracks(userMedia.srcObject);
+
+						  await delay(2000);
+						  source = document.createElement('source');
+						  source.setAttribute('src', 'https:' + linkMp4);
+						  source.setAttribute('type', 'video/mp4');
+						  replayVideo.append(source);
+						  replayVideo.play();
+						  classList.remove('prepareVideo');
+
+					  } else if (type === 'start') {
+						  classList.add('recording');
+						  getAvatar();
+					  } else if (type === 'resume') {
+						  classList.add('recording');
+					  } else if (type === 'recording') {
+					  }
+					  classList.add(type);
+				  }
+				});
+			}
+        </script
+		<!-- end:Вставка TeleMore  -->
+    </body>
+</html>
