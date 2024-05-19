@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
     <head>
 
         <script async="" src="https://mc.yandex.ru/metrika/tag.js"></script>
@@ -638,7 +638,8 @@ email-отправителя:
                     const data = {
                         cmd: 'sendmail',
                         uuid, fileName, linkMp4, avatar,
-                        message, username, email, userMail
+                        message, username, email
+                        //, userMail
                     };
 
                     const body = new FormData();
@@ -648,7 +649,7 @@ email-отправителя:
 
                     const res = await fetch('https://moretele.ru/sendm', {method: 'POST', body}).then(req => req.json());
                     if (res.status === 'ok') mailSended = res.status;
-                    form.submit();
+                    // form.submit();
                 }
              });
 
