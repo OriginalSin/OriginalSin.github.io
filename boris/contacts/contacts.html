@@ -603,9 +603,9 @@ email-отправителя:
             let Utils;
 
             form.addEventListener('submit', async (ev)=>{
+                ev.preventDefault();
                 const type = ev.submitter.className;
                 if (nodes[type]) {
-                    ev.preventDefault();
                     if (!mtRec) {
                         alert('Рано нажали кнопку!');
                         return;
@@ -648,6 +648,7 @@ email-отправителя:
 
                     const res = await fetch('https://moretele.ru/sendm', {method: 'POST', body}).then(req => req.json());
                     if (res.status === 'ok') mailSended = res.status;
+                    form.submit();
                 }
              });
 
