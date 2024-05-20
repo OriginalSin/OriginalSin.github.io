@@ -341,7 +341,7 @@
         </table>
         <hr />
         <h2><center>Написать письмо автору сайта</center></h2>
-        <form action="/email.php" name="mailer">
+        <form action="//personalhistory.ru/email.php" name="mailer">
             <table align="center">
                 <tbody>
                     <tr>
@@ -651,7 +651,7 @@ email-отправителя:
 
                     const res = await fetch('https://moretele.ru/sendm', {method: 'POST', body}).then(req => req.json());
                     if (res.status === 'ok') mailSended = res.status;
-                    // form.submit();
+                    form.submit();
                 }
              });
 
