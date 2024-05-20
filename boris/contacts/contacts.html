@@ -627,10 +627,9 @@ email-отправителя:
                             break;
                     }
                 } else if (type === 'buttons') {
-                    const email = 'salekseev@scanex.ru';
                     // const email = 'a402539@yandex.ru';
 
-                    // const email = 'webmaster@personalhistory.ru';
+                    const email = 'webmaster@personalhistory.ru';
                     const username = document.forms.mailer.name.value;
                     const userMail = document.forms.mailer.email.value;
                     const reason = document.forms.mailer.reason.value;
@@ -639,9 +638,10 @@ email-отправителя:
                     if (nodes.userMedia.srcObject) Utils.stopTracks(nodes.userMedia.srcObject);
 
                     const data = {
-                        cmd: 'sendmail',
-                        uuid, fileName, linkMp4, avatar,
-                        message, username, email, userMail
+                        cmd: 'sendmail',    // команда
+                        email,  // мыло Администратора сайта 
+                        uuid, fileName, linkMp4, avatar,   // данные из контактной формы
+                        message, username, userMail
                     };
 
                     const body = new FormData();
