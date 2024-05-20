@@ -472,12 +472,7 @@ email-отправителя:
 
     /* display: none; */
 }
-.teleMail {
-    /* display: none; */
-}
-.teleMail .buttons button {
-    /* display: none; */
-}
+
 .teleMail .buttons button,
 .teleMail.active .recordTimer,
 .teleMail.active.dataavailable .record,
@@ -541,11 +536,6 @@ email-отправителя:
     font-weight: bolder;
     top: 8px;
 }
-.teleMail .prepareVideo {
-    /* position: relative; */
-    /* top: -228px; */
-
-}
 
 .teleMail .prepareVideo,
 .teleMail .paused {
@@ -594,7 +584,34 @@ email-отправителя:
 }
 		</style>
 
-		<script type="module" src="https://moretele.ru/mtSite/js/mtNs.js"></script>
+<!-- script type="module">
+    import mtNs from 'https://moretele.ru/mtSite/js/mtNs.js?delay=15000';
+    const {Utils, Mrecorder} = mtNs;
+
+    const form = document.forms.mailer;
+    const prnt = document.getElementsByClassName('teleMail')[0];
+    const nodes = [
+        'recordTimer', 'replayVideo', 'userMedia', 'playButton',
+        'record', 'pause', 'resume', 'preview', 'recordAgain'
+    ].reduce((a, k)=>{
+        a[k] = prnt.getElementsByClassName(k)[0];
+        return a;
+    }, {
+        form, // моя форма <form ... />
+        prnt, // контейнер в котором разместили виджет 'mtNs.Mrecorder'
+        // далее дом ноды для управления 'mtNs.Mrecorder'
+    });
+    const myUtils = {   // утилиты вспомагательные
+        clearState: (arr, skip)=>{ // удаляем все css классы по [arr] кроме skip
+            arr.forEach(k=>{ if (k !== skip) prnt.classList.remove(k); });
+        }
+    }
+    // const guid = Utils.getCurrentGuid('https://moretele.ru/mtSite/js/mtNs.js');
+
+    console.warn('mtNs1', Utils, Mrecorder);
+  </script -->
+  
+		<script type="module" src="https://moretele.ru/mtSite/js/mtNs.js?delay=60000&guid=34500"></script>
         <script>
 			let mtRec, avatar, mailSended, uuid = 5, fileName = '', linkMp4;
 			const teleMail = document.getElementsByClassName('teleMail')[0];
