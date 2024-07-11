@@ -1,0 +1,73 @@
+/* body.mtSessMask .modal, */
+body.mtSessMask .modalMsk {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #37373799;
+    /* height: 100%; */
+    z-index: 1000;
+}
+
+body.mtSessMask .modal {
+        font-family: tahoma;
+        font-size: 12px;
+        /* padding: 0;
+        margin: 0; */
+        outline: none;
+    background-color: white;
+    margin: 4rem;
+    padding: 1rem;
+    height: fit-content;
+    border-radius: 6px;
+    max-width: 16rem;
+    position: fixed;
+    top: 4rem;
+    left: 24%;
+    /* top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #37373799; */
+    /* height: 100%; */
+    z-index: 1000;
+
+}
+.modal h3 {
+    /* text-align: center; */
+    /* margin-bottom: 1rem; */
+}
+.modal p {
+    padding: 0.4rem;
+    padding-bottom: 0;
+    margin: 0;
+}
+.modal .center, .modal h3, .modal h2 {
+    text-align: center;
+    margin: 0;
+}
+.code h2 {
+    font-size: small;
+}
+.modal p img {
+    width: 100%;
+}
+.modal p.info {
+    color: gray;
+    font-weight: bold;
+    text-align: center;
+}
+.modal .inputWrapper input {
+    width: 1rem;
+    text-align: center;
+}
+body.mtSessMask .modal button {
+    cursor: pointer;
+    padding: 0.4rem;
+    background-color: #148f2b;
+    color: #fff;
+    width: -webkit-fill-available;
+    border: none;
+    border-radius: 6px;
+}
