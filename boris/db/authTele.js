@@ -21,16 +21,25 @@ window.addEventListener('load', (e) => {
                 pType,
                 (1000 + Math.random() * 9000).toFixed(0)
             ].join(':');
+            window.mtNsCallBack = (data) {
+                console.warn('mtNsCallBack', key, data);
 
-            const url = `https://t.me/phistory1_bot?start=${key}`;
-            const bqr = await mtNs.Utils.getQrImgSrc({url});
-            body.querySelector('img.qrCode').src = bqr;
-            body.querySelector('a.qrLink').href = url;
-            mtNs.bcc.addEventListener('message', e => {
-                const gg = e.data;
-                console.warn('submit', key, gg)
+            };
+            mtNs.Utils.getWindowOpen(
+                `https://auth.moretele.ru/?botName=phistory1_bot&start=${key}`,
+                {
+                    // width: 300
+                }
+            );
 
-            });
+            // const url = `https://t.me/phistory1_bot?start=${key}`;
+            // const bqr = await mtNs.Utils.getQrImgSrc({url});
+            // body.querySelector('img.qrCode').src = bqr;
+            // body.querySelector('a.qrLink').href = url;
+            // ow.addEventListener('message', e => {
+            //     console.warn('ow', key, e)
+
+            // });
         
 
         }
