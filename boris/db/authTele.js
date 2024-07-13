@@ -31,7 +31,7 @@ window.addEventListener('load', (e) => {
 
             // };
             const ow = mtNs.Utils.getWindowOpen(
-                `https://auth.moretele.ru/?botName=phistory1_bot&start=${key}`,
+                `https://moretele.ru/auth/index.html?botName=phistory1_bot&start=${key}`,
                 {
                     width: 300
                 }
