@@ -37,6 +37,10 @@ window.addEventListener('load', (e) => {
                 }
             );
 
+            window.addEventListener('unload', () => {
+                ow.close();
+
+            });
             // const url = `https://t.me/phistory1_bot?start=${key}`;
             // const bqr = await mtNs.Utils.getQrImgSrc({url});
             // body.querySelector('img.qrCode').src = bqr;
