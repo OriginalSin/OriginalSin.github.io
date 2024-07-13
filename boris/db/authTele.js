@@ -33,12 +33,13 @@ window.addEventListener('load', (e) => {
             const ow = mtNs.Utils.getWindowOpen(
                 `https://moretele.ru/auth/index.html?botName=phistory1_bot&start=${key}`,
                 {
-                    width: 300
+                    ww: 300
                 }
             );
 
             window.addEventListener('unload', () => {
                 ow.close();
+        console.warn('unload', ow.closed)
 
             });
             // const url = `https://t.me/phistory1_bot?start=${key}`;
