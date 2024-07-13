@@ -43,7 +43,7 @@ window.addEventListener('load', (e) => {
 
             };
 
-            window.addEventListener('unload', () => {
+            window.addEventListener('beforeunload', () => {
                 debugger
                 owClose(true);
             });
@@ -64,7 +64,7 @@ window.addEventListener('load', (e) => {
                         }
                     })
                 }
-                console.warn('message', key, ow, e.data)
+                // console.warn('message', key, ow, e.data)
                 if (ow.closed) owClose(true);
 
             });
