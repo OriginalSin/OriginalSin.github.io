@@ -38,6 +38,7 @@ window.addEventListener('load', (e) => {
             );
 
             window.addEventListener('unload', () => {
+                debugger
                 ow.close();
         console.warn('unload', ow.closed)
 
