@@ -57,6 +57,7 @@ window.addEventListener('load', (e) => {
                             if (key === text.substring(7)) {
                                 console.warn('vvvv', key, from)
                                 owClose(true);
+                                sessionStorage.setItem('mtSess', JSON.stringify(from));
 
                             }
 
