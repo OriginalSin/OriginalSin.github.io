@@ -21,7 +21,7 @@ window.addEventListener('load', (e) => {
                 pType,
                 (1000 + Math.random() * 9000).toFixed(0)
             ].join(':');
-            window.mtNsCallBack = (data) {
+            window.mtNsCallBack = (data) => {
                 console.warn('mtNsCallBack', key, data);
 
             };
