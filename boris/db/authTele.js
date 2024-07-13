@@ -33,7 +33,7 @@ window.addEventListener('load', (e) => {
                 owClose(true);
             });
 
-            mtNs.bcc.addEventListener('message', e => {
+            const chkData = e => {
                 const {cmd, sessions} = e.data;
                 if (cmd === 'users') {
                     Object.values(sessions.ontg).some(v => {
@@ -46,12 +46,15 @@ window.addEventListener('load', (e) => {
                                 sessionStorage.setItem('mtSess', tgUser);
                                 const tgUserInput = document.createElement('input', tgUser);
                                 form.append(tgUserInput);
+                                mtNs.bcc.removeEventListener('message', chkData);
                             }
                         }
                     })
                 }
                 if (ow.closed) owClose(true);
-            });
+            };
+            mtNs.bcc.addEventListener('message', chkData);
+
         }
     });
 });
