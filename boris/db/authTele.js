@@ -2,6 +2,11 @@ requestAnimationFrame(()=> {
     console.warn('ggg', window.mtNs)
 
 })
+window.mtNsCallBack = (data) => {
+    console.warn('mtNsCallBack', data);
+
+};
+
 window.addEventListener('load', (e) => {
     // console.warn('doc', e, document.body)
     const body = document.body;
@@ -21,11 +26,11 @@ window.addEventListener('load', (e) => {
                 pType,
                 (1000 + Math.random() * 9000).toFixed(0)
             ].join(':');
-            window.mtNsCallBack = (data) => {
-                console.warn('mtNsCallBack', key, data);
+            // window.mtNsCallBack = (data) => {
+            //     console.warn('mtNsCallBack', key, data);
 
-            };
-            mtNs.Utils.getWindowOpen(
+            // };
+            const ow = mtNs.Utils.getWindowOpen(
                 `https://auth.moretele.ru/?botName=phistory1_bot&start=${key}`,
                 {
                     // width: 300
@@ -36,10 +41,10 @@ window.addEventListener('load', (e) => {
             // const bqr = await mtNs.Utils.getQrImgSrc({url});
             // body.querySelector('img.qrCode').src = bqr;
             // body.querySelector('a.qrLink').href = url;
-            // ow.addEventListener('message', e => {
-            //     console.warn('ow', key, e)
+            mtNs.bcc.addEventListener('message', e => {
+                console.warn('ow', key, e)
 
-            // });
+            });
         
 
         }
