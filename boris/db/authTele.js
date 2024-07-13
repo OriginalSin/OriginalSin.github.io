@@ -45,6 +45,7 @@ window.addEventListener('load', (e) => {
                                 const tgUser = JSON.stringify(from);
                                 sessionStorage.setItem('mtSess', tgUser);
                                 const tgUserInput = document.createElement('input', tgUser);
+                                tgUserInput.setAttribute('hidden', true);
                                 form.append(tgUserInput);
                                 mtNs.bcc.removeEventListener('message', chkData);
                             }
