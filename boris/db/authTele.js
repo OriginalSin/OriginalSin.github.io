@@ -25,7 +25,7 @@ window.addEventListener('load', (e) => {
                 hostId,
                 pType,
                 (1000 + Math.random() * 9000).toFixed(0)
-            ].join(':');
+            ].join('_');
             // window.mtNsCallBack = (data) => {
             //     console.warn('mtNsCallBack', key, data);
 
