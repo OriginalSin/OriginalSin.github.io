@@ -13,8 +13,9 @@ window.addEventListener('load', (e) => {
     const clList = body.classList;
     const form = document.forms[0];
     // const origin = location.hostname;   // host с которого авторизуемся
-    const hostId = 21;   // host с которого авторизуемся
+    const hostId = 21;                  // host с которого авторизуемся
     const pType = 15;                   // номер страницы с которой авторизуемся
+    const bName = 'phistory1_bot';      // имя бота
     
     form.addEventListener('submit', async (ev) => {
         let mtSess = sessionStorage.getItem('mtSess');
@@ -31,25 +32,39 @@ window.addEventListener('load', (e) => {
 
             // };
             const ow = mtNs.Utils.getWindowOpen(
-                `https://moretele.ru/auth/index.html?botName=phistory1_bot&start=${key}`,
+                `https://moretele.ru/auth/index.html?botName=${bName}&start=${key}`,
                 {
                     ww: 300
                 }
             );
+            const owClose = (flag) => {
+                if (!ow.closed) ow.close();
+                if (flag) clList.remove('mtSessMask');
+
+            };
 
             window.addEventListener('unload', () => {
                 debugger
-                ow.close();
-        console.warn('unload', ow.closed)
-
+                owClose(true);
             });
-            // const url = `https://t.me/phistory1_bot?start=${key}`;
-            // const bqr = await mtNs.Utils.getQrImgSrc({url});
-            // body.querySelector('img.qrCode').src = bqr;
-            // body.querySelector('a.qrLink').href = url;
+
             mtNs.bcc.addEventListener('message', e => {
+                const {cmd, sessions} = e.data;
+                if (cmd === 'users') {
+                    Object.values(sessions.ontg).some(v => {
+                        if (v.bot && v.bot.name === bName) {
+                            const {text, from} = v.message;
+                            if (key === text.substring(7)) {
+                                console.warn('vvvv', key, from)
+                                owClose(true);
+
+                            }
+
+                        }
+                    })
+                }
                 console.warn('message', key, ow, e.data)
-                if (ow.closed) console.warn('ow closed')
+                if (ow.closed) owClose(true);
 
             });
         
