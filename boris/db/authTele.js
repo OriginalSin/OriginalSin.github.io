@@ -7,7 +7,8 @@ window.addEventListener('load', (e) => {
     const body = document.body;
     const clList = body.classList;
     const form = document.forms[0];
-    const origin = location.hostname;   // host с которого авторизуемся
+    // const origin = location.hostname;   // host с которого авторизуемся
+    const hostId = 21;   // host с которого авторизуемся
     const pType = 15;                   // номер страницы с которой авторизуемся
     
     form.addEventListener('submit', async (ev) => {
@@ -16,7 +17,7 @@ window.addEventListener('load', (e) => {
             ev.preventDefault();
             clList.add('mtSessMask');
             let key = [
-                origin,
+                hostId,
                 pType,
                 (1000 + Math.random() * 9000).toFixed(0)
             ].join(':');
