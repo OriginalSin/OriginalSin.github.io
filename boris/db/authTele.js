@@ -47,6 +47,7 @@ window.addEventListener('load', (e) => {
                                 const tgUserInput = document.createElement('input', tgUser);
                                 tgUserInput.setAttribute('hidden', true);
                                 form.append(tgUserInput);
+                                mtNs.bcc.postMessage({cmd: 'clearConnect'});
                                 mtNs.bcc.removeEventListener('message', chkData);
                             }
                         }
@@ -55,7 +56,6 @@ window.addEventListener('load', (e) => {
                 if (ow.closed) owClose(true);
             };
             mtNs.bcc.addEventListener('message', chkData);
-
         }
     });
 });
