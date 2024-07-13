@@ -7,8 +7,8 @@ window.addEventListener('load', (e) => {
     const body = document.body;
     const clList = body.classList;
     const form = document.forms[0];
-    const origin = location.origin; // host с которого авторизуемся
-    const pType = 15;               // номер страницы с которой авторизуемся
+    const origin = location.hostname;   // host с которого авторизуемся
+    const pType = 15;                   // номер страницы с которой авторизуемся
     
     form.addEventListener('submit', async (ev) => {
         let mtSess = sessionStorage.getItem('mtSess');
