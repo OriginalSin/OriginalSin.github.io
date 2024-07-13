@@ -42,7 +42,8 @@ window.addEventListener('load', (e) => {
             // body.querySelector('img.qrCode').src = bqr;
             // body.querySelector('a.qrLink').href = url;
             mtNs.bcc.addEventListener('message', e => {
-                console.warn('ow', key, e.data)
+                console.warn('message', key, ow, e.data)
+                if (ow.closet) console.warn('ow closed')
 
             });
         
