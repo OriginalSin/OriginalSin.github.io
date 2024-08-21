@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet Video Transformation Example</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="//www.kosmosnimki.ru/lib/geomixer_1.3/geomixer.css" crossorigin=""/>
+	<script src="//www.kosmosnimki.ru/lib/geomixer_1.3/geomixer-src.js?1508146119421" crossorigin=""></script>
+
+	<script src="../src/L.DivTransform.js"></script>
+    
+    <style>
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+        }
+    </style>
+</head>
+<body>
+	<div id="map"></div>
+
+	<script>
+			// var cloudmadeUrl = '//mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&sw=1',
+
+		var cloudmadeUrl = '//{s}.tile.osm.org/{z}/{x}/{y}.png',
+			cloudmade = new L.TileLayer(cloudmadeUrl, {maxNativeZoom: 18, maxZoom: 20}),
+			map = new L.Map('map', {layers: [cloudmade], center: new L.LatLng(55.734799, 37.577861), zoom: 18, maxZoom: 20});
+
+        var item = {
+            href: 'per.mp4',	// https://www.youtube.com/watch?v=8APykL7FaWA
+            width: 1280,
+            height: 720,
+			anchors: [[55.734885087148086, 37.57973849773407],[55.73387629706783, 37.57740497589111],[55.734583056924244, 37.57642865180969],[55.735594848975055, 37.57864952087402]]
+		};
+        var gmxImage = new L.DivTransform('', item.anchors, {
+            opacity: 1,
+            width: item.width,
+            height: item.height,
+            html: '<video id="myvideo" onloadstart="this.playbackRate = 0.2;" autoplay loop muted width="' + item.width + '" height="' + item.height + '"><source src="' + item.href + '" type="video/mp4"></video>'
+        }).on('loaded', function() {
+/*
+			var cont = gmxImage.getContainer();
+			if (cont) {
+				var video = cont.getElementsByTagName('video')[0];
+				// requestAnimationFrame()
+				// video.play();
+
+				map.addControl(L.control.gmxIcon({
+					togglable: true,
+					text: 'Play/Pause Video'
+				})
+				.on('statechange', function () {
+				   if (video.paused){
+						video.play();
+					} else{
+						video.pause();
+					}
+				}));
+			}
+*/
+		});
+		map.addLayer(gmxImage);
+        gmxImage.bringToBack();
+	</script>
+</body>
+</html>
